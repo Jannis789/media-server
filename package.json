@@ -1,0 +1,25 @@
+{
+  "name": "media-server-3",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@alpinejs/mask": "^3.14.9",
+    "@alpinejs/persist": "^3.14.9",
+    "@types/alpinejs__mask": "^3.13.4",
+    "@types/alpinejs__persist": "^3.13.4",
+    "alpinejs": "^3.14.9",
+    "hybrids": "^9.1.18",
+    "lit": "^3.3.1",
+    "lit-html": "^3.3.1",
+    "pinecone-router": "^7.2.0",
+    "sass": "^1.89.2",
+    "vite": "^7.0.5"
+  }
+}
