@@ -3,18 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import "login.scss";
+    </style>
     <title>Login Page</title>
   </head>
   <body>
-      <x-header></x-header>
+    <x-node-test></x-node-test>
+    <x-header></x-header>
+    <x-body>
       <div class="login-container">
         <form class="login-form">
           <center>
-            <img
-              src="/icons/avatar-default-symbolic.svg"
-              alt="Default Avatar Symbolic"
-              class="avatar-symbolic"
-            />
+            <i class="avatar-symbolic"></i>
             <h2 class="login-title">Login</h2>
             <hr />
 
@@ -51,10 +52,15 @@
             <button type="submit" class="login-button">Login</button>
 
             <div class="new-user">
-              <p>Don't have an accout? <a class="hyperlink" href="/register">Signup</a></p>
+              <p>
+                Don't have an accout?
+                <a class="hyperlink" href="/register">Signup</a>
+              </p>
             </div>
           </center>
         </form>
       </div>
+    </x-body>
+    <x-footer></x-footer>
   </body>
 </html>

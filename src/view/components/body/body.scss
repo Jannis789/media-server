@@ -1,0 +1,10 @@
+.main-content {
+  padding: 10px calc(10px + 0.0234 * (100vw - 560px));
+}
+
+.content-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 22px;
+}

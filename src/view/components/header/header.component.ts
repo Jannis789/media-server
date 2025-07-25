@@ -1,8 +1,8 @@
 import AlpineTemplate from "../../../controller/utils/AlpineTemplateDecoratorFactory";
+import "./header.scss";
+import "/global.scss";
 
 @AlpineTemplate("x-header", "/header/header.html")
-class XHeader {
-    public title: string = "Media Server";
-}
+class XHeader {}
 
 export { XHeader };

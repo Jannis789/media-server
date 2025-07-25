@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import path from "path";
 export default defineConfig({
   root: "src",
+  publicDir: "public", // relativ zu root, also src/public
   resolve: {
     alias: {
       "@pages": path.resolve(__dirname, "src/view/pages"),
@@ -22,4 +23,3 @@ export default defineConfig({
     },
   },
 });
-        
