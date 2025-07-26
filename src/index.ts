@@ -3,7 +3,10 @@ import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 import mask from '@alpinejs/mask'
 import establishPineconeRouter from './utils/PineconeRoutes'
-import './components/header/header'
+
+import.meta.glob('./components/**/*.ts', { eager: true })
+
+import './global.scss'
 
 Alpine.plugin(persist)
 Alpine.plugin(mask)

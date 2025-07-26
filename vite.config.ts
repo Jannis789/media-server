@@ -5,5 +5,6 @@ import htmlToFragment from './vite-plugins/vite-plugin-html-import';
 
 export default defineConfig({
   root: 'src',
+  publicDir: '../public',
   plugins: [scssToCSSSheet(), htmlToFragment()],
 });

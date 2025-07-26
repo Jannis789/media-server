@@ -1,0 +1,21 @@
+@use "../../global.scss" as *;
+
+.footer-content {
+  padding: 0px $content-padding-width;
+
+  .footer-area {
+    min-height: 74px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 22px;
+    background-color: #89d;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.06);
+  }
+
+  * {
+    color: #fff;
+  }
+}

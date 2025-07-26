@@ -1,4 +1,5 @@
 import { define } from "hybrids";
+import Alpine from "alpinejs";
 /*
  * AlpineTemplate.ts
  * This file defines a decorator for Hybrids.js
@@ -15,7 +16,8 @@ type AlpineTemplateParams = {
 
 
 function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
-  return function (target: Record<string, any>) {
+  console.info(`AlpineTemplate decorator called for tag: ${tag}`);
+  return function (target: new (...args: any[]) => any) {
     const render = (host: HTMLElement) => {
       // Shadow DOM anlegen, falls nicht vorhanden
       if (!host.shadowRoot) {
@@ -37,6 +39,8 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
           }
         }
       }
+
+
       // Hybrids expects a function to update content, but we use Shadow DOM, so return a no-op
       return () => {};
     };

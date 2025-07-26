@@ -1,0 +1,51 @@
+<div class="login-container">
+  <form class="login-form">
+    <center>
+      <img
+        src="/icons/avatar-default-symbolic.svg"
+        alt="Default Avatar Symbolic"
+        class="avatar-symbolic"
+      />
+      <h2 class="login-title">Login</h2>
+      <hr />
+
+      <div class="entry-rows">
+        <label for="email"></label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+        <br />
+        <label for="password"></label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+
+      <div class="options">
+        <label for="remember-me">
+          <input type="checkbox" id="remember-me" name="remember-me" />
+          Remember me
+        </label>
+        <a href="/forgot-password" class="forgot-password hyperlink"
+          >Forgot password?</a
+        >
+      </div>
+
+      <button type="submit" class="login-button">Login</button>
+
+      <div class="new-user">
+        <p>
+          Don't have an accout? <a class="hyperlink" href="/register">Signup</a>
+        </p>
+      </div>
+    </center>
+  </form>
+</div>

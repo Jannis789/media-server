@@ -1,0 +1,34 @@
+$body-padding: 10px max(4px, min(480px, calc(0.2 * 100vw - 115px)));
+$content-padding-width: calc(10px + 0.0234 * (100vw - 560px));
+
+body {
+    margin: 0;
+    padding: $body-padding;
+    box-sizing: border-box;
+    background-color: #ddf;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    color: #667;
+}
+
+a:hover {
+    cursor: pointer;
+    color: #224;
+}
+
+a {
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.hyperlink {
+    color: #667;
+    text-decoration: underline;
+}
+
+.hyperlink:hover {
+    color: #81f;
+}
