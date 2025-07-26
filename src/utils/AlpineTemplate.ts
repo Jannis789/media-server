@@ -20,27 +20,19 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
   console.info(`AlpineTemplate decorator called for tag: ${tag}`);
   return function (target: new (...args: any[]) => any) {
     const render = (host: HTMLElement) => {
-      // Shadow DOM anlegen, falls nicht vorhanden
-      if (!host.shadowRoot) {
-        const shadow: ShadowRoot = host.attachShadow({ mode: "open" });
-        // Template einfügen
-        shadow.appendChild(template.cloneNode(true));
-        // Stylesheets einfügen
-        if (style) {
-          const sheets = Array.isArray(style) ? style : [style];
-          if ("adoptedStyleSheets" in shadow) {
-            // @ts-ignore
-            shadow.adoptedStyleSheets = sheets;
-          } else {
-            for (const sheet of sheets) {
-              const el = document.createElement("style");
-              el.textContent = [...sheet.cssRules]
-                .map((rule) => rule.cssText)
-                .join("");
-              (shadow as ShadowRoot).appendChild(el);
-            }
-          }
+
+      const shadow: ShadowRoot = host.attachShadow({ mode: "open" });
+
+      shadow.appendChild(template.cloneNode(true));
+
+      if (style) {
+        const sheets = Array.isArray(style) ? style : [style];
+        if ("adoptedStyleSheets" in shadow === false) {
+          throw new Error(
+            "Adopted stylesheets are not supported in this browser."
+          );
         }
+        shadow.adoptedStyleSheets = sheets;
       }
 
       console.info(`Rendering Alpine component: ${tag}`);
@@ -54,13 +46,13 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
 
     document.addEventListener("alpine:init", () => {
       window.component = (tag: string) => {
-        const Klass = componentMap.get(tag);
-        if (!Klass) {
+        const ctor = componentMap.get(tag);
+        if (!ctor) {
           console.error(`Komponente '${tag}' nicht gefunden.`);
           return {};
         }
         console.info(`Instanziiere Komponente '${tag}'`);
-        return new Klass();
+        return new ctor();
       };
     });
 

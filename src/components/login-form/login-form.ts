@@ -7,7 +7,7 @@ import { AlpineTemplate } from '../../utils/AlpineTemplate';
     template: template,
     style: style,
 })
-export class XHeader {
+export class XLoginForm {
     public email: string = '';
     public password: string = '';
 
