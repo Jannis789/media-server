@@ -8,5 +8,11 @@ import { AlpineTemplate } from '../../utils/AlpineTemplate';
     style: style,
 })
 export class XHeader {
+    public email: string = '';
+    public password: string = '';
 
+    public login() {
+        console.log('E-Mail: ', this.email);
+        console.log('Passwort: ', this.password);
+    }
 }

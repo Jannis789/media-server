@@ -9,3 +9,7 @@ declare module '*.html' {
   const html: DocumentFragment;
   export default html;
 }
+
+interface Window {
+  component: (tag: string) => { new (...args: any[]): any };
+}

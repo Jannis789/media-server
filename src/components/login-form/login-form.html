@@ -1,5 +1,5 @@
 <div class="login-container">
-  <form class="login-form">
+  <form x-data="component('x-login-form')" class="login-form" @submit.prevent="login()">
     <center>
       <img
         src="/icons/avatar-default-symbolic.svg"
@@ -16,6 +16,7 @@
           id="email"
           name="email"
           placeholder="Email"
+          x-model="email"
           required
         />
         <br />
@@ -25,6 +26,7 @@
           id="password"
           name="password"
           placeholder="Password"
+          x-model="password"
           required
         />
       </div>

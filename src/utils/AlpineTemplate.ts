@@ -14,6 +14,7 @@ type AlpineTemplateParams = {
   style: CSSStyleSheet | CSSStyleSheet[];
 };
 
+const componentMap = new Map<string, any>();
 
 function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
   console.info(`AlpineTemplate decorator called for tag: ${tag}`);
@@ -21,29 +22,47 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
     const render = (host: HTMLElement) => {
       // Shadow DOM anlegen, falls nicht vorhanden
       if (!host.shadowRoot) {
-        const shadow: ShadowRoot = host.attachShadow({ mode: 'open' });
+        const shadow: ShadowRoot = host.attachShadow({ mode: "open" });
         // Template einfügen
         shadow.appendChild(template.cloneNode(true));
         // Stylesheets einfügen
         if (style) {
           const sheets = Array.isArray(style) ? style : [style];
-          if ('adoptedStyleSheets' in shadow) {
+          if ("adoptedStyleSheets" in shadow) {
             // @ts-ignore
             shadow.adoptedStyleSheets = sheets;
           } else {
             for (const sheet of sheets) {
-              const el = document.createElement('style');
-              el.textContent = [...sheet.cssRules].map(rule => rule.cssText).join('');
+              const el = document.createElement("style");
+              el.textContent = [...sheet.cssRules]
+                .map((rule) => rule.cssText)
+                .join("");
               (shadow as ShadowRoot).appendChild(el);
             }
           }
         }
       }
 
+      console.info(`Rendering Alpine component: ${tag}`);
 
-      // Hybrids expects a function to update content, but we use Shadow DOM, so return a no-op
+      Alpine.initTree(host.shadowRoot! as unknown as HTMLElement);
+
       return () => {};
     };
+
+    componentMap.set(tag, target);
+
+    document.addEventListener("alpine:init", () => {
+      window.component = (tag: string) => {
+        const Klass = componentMap.get(tag);
+        if (!Klass) {
+          console.error(`Komponente '${tag}' nicht gefunden.`);
+          return {};
+        }
+        console.info(`Instanziiere Komponente '${tag}'`);
+        return new Klass();
+      };
+    });
 
     define({
       tag,

@@ -8,5 +8,5 @@ import { AlpineTemplate } from '../../utils/AlpineTemplate';
     style: style,
 })
 export class XHeader {
-    public static test: string = 'Test';
+    public test: string = 'Test';
 }
