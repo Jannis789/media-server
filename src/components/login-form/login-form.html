@@ -41,7 +41,11 @@
         >
       </div>
 
-      <button type="submit" class="login-button">Login</button>
+      <button type="submit" class="login-button" :disabled="loading" x-text="loading ? 'Logging in...' : 'Login'"></button>
+
+      <div class="error-message" x-show="error" style="color: red; margin-top: 1em;">
+        <span x-text="error"></span>
+      </div>
 
       <div class="new-user">
         <p>
