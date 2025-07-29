@@ -17,6 +17,7 @@
     "@alpinejs/persist": "^3.14.9",
     "@types/alpinejs__mask": "^3.13.4",
     "@types/alpinejs__persist": "^3.13.4",
+    "alpinejs": "^3.14.9",
     "hybrids": "^9.1.18",
     "pinecone-router": "^7.2.0",
     "sass": "^1.89.2"

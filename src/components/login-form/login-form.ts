@@ -1,3 +1,9 @@
+// Alpine.js persist helper typings (Workaround)
+declare global {
+  interface Window {
+    Alpine?: any;
+  }
+}
 import template from "./login-form.html";
 import style from "./login-form.scsssheet";
 import { AlpineTemplate } from "../../utils/AlpineTemplate";
@@ -18,35 +24,34 @@ export class XLoginForm {
     this.error = "";
     this.loading = true;
     try {
-      const response = await fetch("http://localhost:3000/Login/graphql", {
+      const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query: `mutation Login($email: String!, $password: String!) {
-                    login(email: $email, password: $password) {
-                        sessionToken
-                        userId
-                        error
-                    }
-                }`,
+          query: `mutation Login($email: String!, $password: String!) { login(email: $email, password: $password) }`,
           variables: {
             email: this.email,
             password: this.password,
           },
         }),
-        credentials: "include",
       });
       const result = await response.json();
-      if (result.errors && result.errors.length > 0) {
-        this.error = result.errors[0].message || "Login failed.";
-        console.info("Login failed:", this.error);
-      } else if (result.data && result.data.login && !result.data.login.error) {
-        console.info("Login succeeded:", result.data.login);
+      const sessionToken = result?.data?.login;
+      if (sessionToken) {
+        // Versuche Alpine.$persist, fallback auf localStorage
+        if (window.Alpine && typeof window.Alpine.$persist === 'function') {
+          window.Alpine.$persist('sessionToken', sessionToken);
+        } else {
+          localStorage.setItem('sessionToken', sessionToken);
+        }
+        this.error = "";
+        // Optional: Weiterleitung oder UI-Update
+        console.info("Login succeeded, sessionToken:", sessionToken);
       } else {
-        this.error = result.data.login?.error || "Login failed.";
-        console.info("Login failed:", this.error);
+        this.error = "Login fehlgeschlagen.";
+        console.info("Login failed:", result);
       }
     } catch (e) {
       this.error = "Network error.";
