@@ -7,6 +7,8 @@ declare global {
 import template from "./login-form.html";
 import style from "./login-form.scsssheet";
 import { AlpineTemplate } from "../../utils/AlpineTemplate";
+import request from "../../utils/RequestHandler";
+import { CookieReader } from "../../utils/CookieReader";
 
 @AlpineTemplate({
   tag: "x-login-form",
@@ -24,7 +26,7 @@ export class XLoginForm {
     this.error = "";
     this.loading = true;
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await request("http://localhost:3000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,16 +40,11 @@ export class XLoginForm {
         }),
       });
       const result = await response.json();
-      const sessionToken = result?.data?.login;
+      const sessionToken: string | null = result?.data?.login;
       if (sessionToken) {
-        // Versuche Alpine.$persist, fallback auf localStorage
-        if (window.Alpine && typeof window.Alpine.$persist === 'function') {
-          window.Alpine.$persist('sessionToken', sessionToken);
-        } else {
-          localStorage.setItem('sessionToken', sessionToken);
-        }
-        this.error = "";
-        // Optional: Weiterleitung oder UI-Update
+        // Store sessionToken in a cookie
+        CookieReader.add("session_id", sessionToken);
+
         console.info("Login succeeded, sessionToken:", sessionToken);
       } else {
         this.error = "Login fehlgeschlagen.";
