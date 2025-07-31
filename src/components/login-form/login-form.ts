@@ -9,6 +9,7 @@ import style from "./login-form.scsssheet";
 import { AlpineTemplate } from "../../utils/AlpineTemplate";
 import request from "../../utils/RequestHandler";
 import { CookieReader } from "../../utils/CookieReader";
+import GlobalStorage from "../../utils/GlobalStorage";
 
 @AlpineTemplate({
   tag: "x-login-form",
@@ -46,6 +47,8 @@ export class XLoginForm {
         CookieReader.add("session_id", sessionToken);
 
         console.info("Login succeeded, sessionToken:", sessionToken);
+
+        GlobalStorage.set("isLoggedIn", true);
       } else {
         this.error = "Login fehlgeschlagen.";
         console.info("Login failed:", result);

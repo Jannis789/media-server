@@ -1,4 +1,5 @@
 import { CookieReader } from "./CookieReader";
+import GlobalStorage from "./GlobalStorage";
 
 async function request(
   input: RequestInfo | URL,
@@ -12,6 +13,7 @@ async function request(
       if (CookieReader.has("session_id")) {
         console.warn("Unauthorized Session: Deleting session_id cookie, maybe expired.");
         CookieReader.delete("session_id");
+        GlobalStorage.set("isLoggedIn", false);
       }
       break;
     case 403:
