@@ -1,5 +1,5 @@
-import { CookieReader } from "./CookieReader";
-import GlobalStorage from "./GlobalStorage";
+import { CookieReader } from "./CookieReader.ts";
+import GlobalStorage from "./GlobalStorage.ts";
 
 async function request(
   input: RequestInfo | URL,

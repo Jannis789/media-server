@@ -11,5 +11,5 @@ declare module '*.html' {
 }
 
 interface Window {
-  component: (tag: string) => { new (...args: any[]): any };
+  component: (tag: string) => { new (...args: unknown[]): unknown };
 }

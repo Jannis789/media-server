@@ -1,6 +1,6 @@
 import template from './header.html'
 import style from './header.scsssheet'
-import { AlpineTemplate } from '../../utils/AlpineTemplate';
+import { AlpineTemplate } from '../../utils/AlpineTemplate.ts';
 
 @AlpineTemplate({
     tag: 'x-header',

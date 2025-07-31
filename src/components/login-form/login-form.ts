@@ -1,15 +1,9 @@
-// Alpine.js persist helper typings (Workaround)
-declare global {
-  interface Window {
-    Alpine?: any;
-  }
-}
 import template from "./login-form.html";
 import style from "./login-form.scsssheet";
-import { AlpineTemplate } from "../../utils/AlpineTemplate";
-import request from "../../utils/RequestHandler";
-import { CookieReader } from "../../utils/CookieReader";
-import GlobalStorage from "../../utils/GlobalStorage";
+import { AlpineTemplate } from "../../utils/AlpineTemplate.ts";
+import request from "../../utils/RequestHandler.ts";
+import { CookieReader } from "../../utils/CookieReader.ts";
+import GlobalStorage from "../../utils/GlobalStorage.ts";
 
 @AlpineTemplate({
   tag: "x-login-form",
@@ -55,7 +49,7 @@ export class XLoginForm {
       }
     } catch (e) {
       this.error = "Network error.";
-      console.info("Login failed:", this.error);
+      console.info("Login failed:", this.error, e);
     } finally {
       this.loading = false;
     }

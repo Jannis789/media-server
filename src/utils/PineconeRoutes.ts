@@ -1,5 +1,5 @@
 import type { PineconeRouter } from "pinecone-router";
-import GlobalStorage from "./GlobalStorage";
+import GlobalStorage from "./GlobalStorage.ts";
 
 function establishPineconeRouter(router: PineconeRouter) {
 	router.settings({

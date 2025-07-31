@@ -2,13 +2,17 @@ import Alpine from "alpinejs";
 
 type ExtractInner<T> = T extends ReturnType<typeof Alpine.$persist<infer U>> ? U : never;
 
+function createGlobalOptions() {
+    return {
+        isLoggedIn: Alpine.$persist(false),
+    };
+}
+
 class GlobalStorage {
-    private static globalOptions: any;
+    private static globalOptions: ReturnType<typeof createGlobalOptions>;
 
     static insert() {
-        this.globalOptions = {
-            isLoggedIn: Alpine.$persist(false),
-        };
+        this.globalOptions = createGlobalOptions();
         Alpine.store("global", this.globalOptions);
     }
 
@@ -24,7 +28,7 @@ class GlobalStorage {
     }
 
     static set<K extends keyof typeof GlobalStorage.globalOptions>(key: K, value: ExtractInner<typeof GlobalStorage.globalOptions[K]>) {
-        this.options[key] = value;
+        this.options[key] = Alpine.$persist(value);
     }
 }
 

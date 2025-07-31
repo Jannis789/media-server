@@ -14,11 +14,11 @@ type AlpineTemplateParams = {
   style: CSSStyleSheet | CSSStyleSheet[];
 };
 
-const componentMap = new Map<string, any>();
+const componentMap = new Map<string, unknown>();
 
 function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
   console.info(`AlpineTemplate decorator called for tag: ${tag}`);
-  return function (target: new (...args: any[]) => any) {
+  return function (target: new (...args: unknown[]) => unknown) {
     const render = (host: HTMLElement) => {
 
       const shadow: ShadowRoot = host.attachShadow({ mode: "open" });
@@ -47,12 +47,8 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
     document.addEventListener("alpine:init", () => {
       window.component = (tag: string) => {
         const ctor = componentMap.get(tag);
-        if (!ctor) {
-          console.error(`Komponente '${tag}' nicht gefunden.`);
-          return {};
-        }
         console.info(`Instanziiere Komponente '${tag}'`);
-        return new ctor();
+        return ctor as new (...args: unknown[]) => unknown;
       };
     });
 
