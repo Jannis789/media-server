@@ -16,8 +16,8 @@ Alpine.plugin(mask);
 Alpine.plugin(PineconeRouter);
 
 document.addEventListener("alpine:init", () => {
-  establishPineconeRouter(Alpine.$router);
   GlobalStorage.insert();
+  establishPineconeRouter(Alpine.$router);
 });
 
 Alpine.start();

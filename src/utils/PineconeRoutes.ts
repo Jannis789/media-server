@@ -1,4 +1,5 @@
 import type { PineconeRouter } from "pinecone-router";
+import GlobalStorage from "./GlobalStorage";
 
 function establishPineconeRouter(router: PineconeRouter) {
 	router.settings({
@@ -8,8 +9,12 @@ function establishPineconeRouter(router: PineconeRouter) {
 		},
 	});
 
+	console.info(document.location.href);
+
+	const loginFallback = GlobalStorage.get("isLoggedIn") ? '/layouts/home.html' : '/layouts/login.html';
+
 	router.add('/', {
-		templates: ['/layouts/login.html'],
+		templates: ['/layouts/landing-page.html'],
 	});
 
 	router.add('/index.html', {
@@ -17,8 +22,12 @@ function establishPineconeRouter(router: PineconeRouter) {
 	});
 
 	router.add('/login', {
-		templates: ['/layouts/login.html'],
+		templates: [loginFallback],
 	});
+
+	const usedTemplates = router.routes.get(document.location.pathname)?.templates;
+	console.info(`On Route: "${document.location.pathname}" with templates: "${usedTemplates?.join(', ')}"`);
+
 }
 
 export default establishPineconeRouter;
