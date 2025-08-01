@@ -5,6 +5,9 @@ import request from "../../utils/RequestHandler.ts";
 import { CookieReader } from "../../utils/CookieReader.ts";
 import GlobalStorage from "../../utils/GlobalStorage.ts";
 
+// @todo resolve eslint errors
+// @todo get Interfaces from Backend
+
 @AlpineTemplate({
   tag: "x-login-form",
   template: template,
@@ -17,41 +20,51 @@ export class XLoginForm {
   public error: string = "";
   public loading: boolean = false;
 
-  public async login() {
+  private get requestData() {
+    return {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `mutation Login($email: String!, $password: String!) { login(email: $email, password: $password) }`,
+        variables: {
+          email: this.email,
+          password: this.password,
+        },
+      }),
+    }
+  }
+
+  public login() {
     this.error = "";
     this.loading = true;
-    try {
-      const response = await request("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: `mutation Login($email: String!, $password: String!) { login(email: $email, password: $password) }`,
-          variables: {
-            email: this.email,
-            password: this.password,
-          },
-        }),
-      });
-      const result = await response.json();
-      const sessionToken: string | null = result?.data?.login;
-      if (sessionToken) {
-        // Store sessionToken in a cookie
-        CookieReader.add("session_id", sessionToken);
+    request("http://localhost:3000/login", this.requestData)
+      .then((response) => response.json())
+      .then((result) => this.handleResult(result))
+      .catch((e) => this.handleError(e))
+      .finally(() => (this.loading = false));
+  }
 
-        console.info("Login succeeded, sessionToken:", sessionToken);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private handleResult(result: any) { 
+    const sessionToken: string | null = result.data.login;
+    if (sessionToken) {
+      // Store sessionToken in a cookie
+      CookieReader.add("session_id", sessionToken);
 
-        GlobalStorage.set("isLoggedIn", true);
-      } else {
-        this.error = "Login fehlgeschlagen.";
-        console.info("Login failed:", result);
-      }
-    } catch (e) {
-      this.error = "Network error.";
-      console.info("Login failed:", this.error, e);
-    } finally {
-      this.loading = false;
+      console.info("Login succeeded, sessionToken:", sessionToken);
+
+      GlobalStorage.set("isLoggedIn", true);
+    } else {
+      this.error = "Login fehlgeschlagen.";
+      console.info("Login failed:", result);
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private handleError(e: any) {
+    this.error = "Network error.";
+    console.info("Login failed:", this.error, e);
   }
 }

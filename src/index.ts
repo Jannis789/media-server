@@ -8,6 +8,7 @@ import.meta.glob("./components/**/*.ts", { eager: true });
 import establishPineconeRouter from "./utils/PineconeRoutes.ts";
 import GlobalStorage from "./utils/GlobalStorage.ts";
 import defineAlpineInterpolate from "./utils/AlpineInterpolate.ts";
+import reciveTranslations from "./utils/TranslationReciver.ts";
 
 import "./global.scss";
 
@@ -15,10 +16,11 @@ Alpine.plugin(persist);
 Alpine.plugin(mask);
 Alpine.plugin(PineconeRouter);
 
-document.addEventListener("alpine:init", () => {
+document.addEventListener("alpine:init", async () => {
   GlobalStorage.insert();
   defineAlpineInterpolate();
   establishPineconeRouter(Alpine.$router);
+  await reciveTranslations();
 });
 
 Alpine.start();
