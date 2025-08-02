@@ -43,14 +43,10 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
 
     componentMap.set(tag, target);
 
-    document.addEventListener("alpine:init", () => {
-      (window as { component: (tag: string) => unknown }).component = (
-        tag: string
-      ): unknown => {
-        const ctor = componentMap.get(tag) as { new (): unknown } | undefined;
-        if (!ctor) throw new Error(`Component for tag '${tag}' not found`);
-        return new ctor();
-      };
+    Alpine.magic("component", () => (tag: string) => {
+      const ctor = componentMap.get(tag) as { new (): unknown } | undefined;
+      if (!ctor) throw new Error(`Component for tag '${tag}' not found`);
+      return new ctor();
     });
 
     define({

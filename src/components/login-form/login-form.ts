@@ -27,10 +27,11 @@ export class XLoginForm {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        query: `mutation Login($email: String!, $password: String!) { login(email: $email, password: $password) }`,
+        query: `mutation Login($email: String!, $password: String!, $rememberMe: Boolean!) { login(email: $email, password: $password, $rememberMe: rememberMe) }`,
         variables: {
           email: this.email,
           password: this.password,
+          rememberMe: this.remember,
         },
       }),
     }
@@ -48,6 +49,7 @@ export class XLoginForm {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private handleResult(result: any) { 
+    console.log(result);
     const sessionToken: string | null = result.data.login;
     if (sessionToken) {
       // Store sessionToken in a cookie

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div class="login-container">
   <form
-    x-data="component('x-login-form')"
+    x-data="$component('x-login-form')"
     class="login-form"
     @submit.prevent="login()"
   >
@@ -11,7 +11,7 @@
         alt="Default Avatar Symbolic"
         class="avatar-symbolic"
       />
-      <h2 class="login-title" x-interpolate>${$i18n.login}</h2>
+      <h2 class="login-title" x-interpolate>#{login}</h2>
       <hr />
 
       <div class="entry-rows">
@@ -44,13 +44,13 @@
             id="remember-me"
             name="remember-me"
           />
-          <span x-interpolate>${$i18n.rememberMe}</span>
+          <span x-interpolate>#{rememberMe}</span>
         </label>
         <a
           href="/forgot-password"
           class="forgot-password hyperlink"
           x-interpolate
-          >${$i18n.forgotPassword}</a
+          >#{forgotPassword}</a
         >
       </div>
 
@@ -67,9 +67,9 @@
 
       <div class="new-user">
         <p>
-          <span x-interpolate>${$i18n.noAccount}</span>
+          <span x-interpolate>#{noAccount}</span>
           <a class="hyperlink" href="/register" x-interpolate
-            >${$i18n.signup}</a
+            >#{signup}</a
           >
         </p>
       </div>

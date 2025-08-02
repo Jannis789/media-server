@@ -7,7 +7,8 @@ function defineAlpineInterpolate() {
       let evalStr = expression
         ? "`" + expression + "`"
         : "`" + el.innerText + "`";
-      let evaluate = evaluateLater(evalStr);
+      
+      let evaluate = evaluateLater(transformI18nPlaceholders(evalStr));
 
       effect(() => {
         evaluate((value) => {
@@ -16,6 +17,10 @@ function defineAlpineInterpolate() {
       });
     }
   );
+}
+
+function transformI18nPlaceholders(str: string): string {
+  return str.replace(/#\{(.*?)\}/g, (_, variable) => `\${$i18n.${variable}}`);
 }
 
 export default defineAlpineInterpolate;
