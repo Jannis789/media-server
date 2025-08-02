@@ -1,12 +1,17 @@
+<!DOCTYPE html>
 <div class="login-container">
-  <form x-data="component('x-login-form')" class="login-form" @submit.prevent="login()">
+  <form
+    x-data="component('x-login-form')"
+    class="login-form"
+    @submit.prevent="login()"
+  >
     <center>
       <img
         src="/icons/avatar-default-symbolic.svg"
         alt="Default Avatar Symbolic"
         class="avatar-symbolic"
       />
-      <h2 class="login-title">Login</h2>
+      <h2 class="login-title" x-interpolate>${$i18n.login}</h2>
       <hr />
 
       <div class="entry-rows">
@@ -15,7 +20,7 @@
           type="email"
           id="email"
           name="email"
-          placeholder="Email"
+          :placeholder="$i18n.email"
           x-model="email"
           required
         />
@@ -25,7 +30,7 @@
           type="password"
           id="password"
           name="password"
-          placeholder="Password"
+          :placeholder="$i18n.password"
           x-model="password"
           required
         />
@@ -33,15 +38,28 @@
 
       <div class="options">
         <label for="remember-me">
-          <input type="checkbox" x-model="remember" id="remember-me" name="remember-me" />
-          Remember me
+          <input
+            type="checkbox"
+            x-model="remember"
+            id="remember-me"
+            name="remember-me"
+          />
+          <span x-interpolate>${$i18n.rememberMe}</span>
         </label>
-        <a href="/forgot-password" class="forgot-password hyperlink"
-          >Forgot password?</a
+        <a
+          href="/forgot-password"
+          class="forgot-password hyperlink"
+          x-interpolate
+          >${$i18n.forgotPassword}</a
         >
       </div>
 
-      <button type="submit" class="login-button" :disabled="loading" x-text="loading ? 'Logging in...' : 'Login'"></button>
+      <button
+        type="submit"
+        class="login-button"
+        :disabled="loading"
+        x-text="loading ? 'Logging in...' : $i18n.login"
+      ></button>
 
       <div class="error-message" x-show="error">
         <span x-text="error"></span>
@@ -49,7 +67,10 @@
 
       <div class="new-user">
         <p>
-          Don't have an accout? <a class="hyperlink" href="/register">Signup</a>
+          <span x-interpolate>${$i18n.noAccount}</span>
+          <a class="hyperlink" href="/register" x-interpolate
+            >${$i18n.signup}</a
+          >
         </p>
       </div>
     </center>

@@ -2,9 +2,19 @@ import Alpine from "alpinejs";
 
 type ExtractInner<T> = T extends ReturnType<typeof Alpine.$persist<infer U>> ? U : never;
 
+function getCountryCode(): string {
+  const lang = navigator.language;
+  if (lang.length === 2) return lang;
+  if (lang.includes("-")) return lang.split("-")[0];
+  return "en";
+}
+
 function createGlobalOptions() {
     return {
-        isLoggedIn: Alpine.$persist(false),
+        isLoggedIn: Alpine.$persist<boolean>(false),
+        currentLanguage: Alpine.$persist<string>(getCountryCode()),
+        i18nTranslations: Alpine.$persist<Record<string, string>>({}),
+        i18nModifiedAt: Alpine.$persist<Date | null>(null),
     };
 }
 
@@ -28,7 +38,7 @@ class GlobalStorage {
     }
 
     static set<K extends keyof typeof GlobalStorage.globalOptions>(key: K, value: ExtractInner<typeof GlobalStorage.globalOptions[K]>) {
-        this.options[key] = Alpine.$persist(value);
+        this.options[key] = Alpine.$persist(value) as unknown as typeof GlobalStorage.globalOptions[K];
     }
 }
 

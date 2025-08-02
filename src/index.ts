@@ -16,11 +16,13 @@ Alpine.plugin(persist);
 Alpine.plugin(mask);
 Alpine.plugin(PineconeRouter);
 
+Alpine.magic("i18n", () => GlobalStorage.get("i18nTranslations").initialValue);
+
 document.addEventListener("alpine:init", async () => {
   GlobalStorage.insert();
   defineAlpineInterpolate();
   establishPineconeRouter(Alpine.$router);
-  await reciveTranslations();
+  reciveTranslations();
 });
 
 Alpine.start();

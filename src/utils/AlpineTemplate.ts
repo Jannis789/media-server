@@ -20,7 +20,6 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
   console.info(`AlpineTemplate decorator called for tag: ${tag}`);
   return function (target: new (...args: unknown[]) => unknown) {
     const render = (host: HTMLElement) => {
-
       const shadow: ShadowRoot = host.attachShadow({ mode: "open" });
 
       shadow.appendChild(template.cloneNode(true));
@@ -45,10 +44,12 @@ function AlpineTemplate({ tag, template, style }: AlpineTemplateParams) {
     componentMap.set(tag, target);
 
     document.addEventListener("alpine:init", () => {
-      window.component = (tag: string) => {
-        const ctor = componentMap.get(tag);
-        console.info(`Instanziiere Komponente '${tag}'`);
-        return ctor as new (...args: unknown[]) => unknown;
+      (window as { component: (tag: string) => unknown }).component = (
+        tag: string
+      ): unknown => {
+        const ctor = componentMap.get(tag) as { new (): unknown } | undefined;
+        if (!ctor) throw new Error(`Component for tag '${tag}' not found`);
+        return new ctor();
       };
     });
 
