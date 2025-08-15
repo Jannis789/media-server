@@ -4,4 +4,4 @@ curl -X POST -i http://localhost:3000/User/register \
 
 curl -X POST -i http://localhost:3000/User/login \
   -H "Content-Type: application/json" \
-  -d '{"email": "test@test.com", "password": "Jannis21!", "remember": true}'asdsad
+  -d '{"email": "test@test.com", "password": "Jannis21!", "remember": true}'
