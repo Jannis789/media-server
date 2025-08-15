@@ -1,1 +1,0 @@
-curl -X POST http://localhost:3000/Translation/de -H "Content-Type: application/json" -d '{"since": "2025-08-12T19:50:07.300Z"}'
