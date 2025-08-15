@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Media Server Icon</title>
+  <desc id="desc">Abstrakte Serverkachel mit Play-Symbol und Sendewellen.</desc>
+
+  <style>
+    :root {
+      --logo-primary: #111827;
+      --logo-accent:  #2563eb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --logo-primary: #dde;
+        --logo-accent:  #aaf;
+      }
+    }
+    .primary { fill: var(--logo-primary); }
+    .accent  { fill: var(--logo-accent); }
+    .stroke-accent { stroke: var(--logo-accent); }
+    .stroke-primary { stroke: var(--logo-primary); }
+  </style>
+
+  <!-- MARK ICON -->
+  <g>
+    <ellipse cx="32" cy="66" rx="22" ry="3" fill="black" opacity="0.08"/>
+    <rect x="0" y="0" width="64" height="64" rx="14" class="primary"/>
+    <g opacity="0.4">
+      <rect x="14" y="14" width="36" height="4" rx="2" class="accent"/>
+      <rect x="14" y="24" width="28" height="4" rx="2" class="accent"/>
+    </g>
+    <circle cx="54" cy="24" r="3" class="accent"/>
+    <defs>
+      <mask id="cut">
+        <rect x="0" y="0" width="64" height="64" rx="14"/>
+        <path d="M26 34 L26 52 L42 43 Z" fill="#000"/>
+      </mask>
+    </defs>
+    <rect x="0" y="0" width="64" height="64" rx="14" mask="url(#cut)" fill="none"/>
+    <g fill="none" stroke-linecap="round" stroke-width="3" class="stroke-accent">
+      <path d="M46 40c8 0 14 6 14 14" opacity="1"/>
+      <path d="M46 40c12 0 22 10 22 22" opacity="0.5"/>
+    </g>
+  </g>
+</svg>

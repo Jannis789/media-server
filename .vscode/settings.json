@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.xcss": "scss",
+    "*.tmpl": "html"
+  }
+}

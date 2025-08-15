@@ -1,0 +1,57 @@
+<div class="login-container">
+  <form class="login-form" @submit.prevent="login()">
+    <center>
+      <img
+        src="/icons/avatar-default-symbolic.svg"
+        alt="Default Avatar Symbolic"
+        class="avatar-symbolic"
+      />
+      <h2 class="login-title">Login</h2>
+      <hr />
+
+      <div class="entry-rows">
+        <label for="email"></label>
+        <input
+          type="input"
+          id="email"
+          name="email"
+          placeholder="Email"
+          x-model="email"
+          required
+        />
+        <br />
+        <label for="password"></label>
+        <input
+          type="input"
+          id="password"
+          name="password"
+          placeholder="Password"
+          x-model="password"
+          required
+        />
+      </div>
+
+      <div class="options">
+        <label for="remember-me">
+          <input type="checkbox" x-model="remember" id="remember-me" name="remember-me" />
+          Remember me
+        </label>
+        <a href="/forgot-password" class="forgot-password hyperlink"
+          >Forgot password?</a
+        >
+      </div>
+
+      <button type="submit" class="login-button" :disabled="loading" x-text="loading ? 'Logging in...' : 'Login'"></button>
+
+      <div class="error-message" x-show="error" style="color: red; margin-top: 1em;">
+        <span x-text="error"></span>
+      </div>
+
+      <div class="new-user">
+        <p>
+          Don't have an accout? <a class="hyperlink" href="/register">Signup</a>
+        </p>
+      </div>
+    </center>
+  </form>
+</div>
