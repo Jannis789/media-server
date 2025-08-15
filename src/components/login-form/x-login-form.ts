@@ -16,7 +16,7 @@ export class XLoginForm extends HTMLElement {
         remember: false,
         error: "",
         loading: false,
-        
+
         login() {
           
         }
