@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
-import { HtmlImport } from './plugins/HtmlImport';
 import { XcssImport } from './plugins/XcssImport';
-import path from 'path';
 import { TmplImport } from './plugins/TmplImport';
+import path from 'path';
+import config from './src/config';
 
 export default defineConfig({
   root: './src',
@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: config.frontendPort,
     open: true,
     strictPort: true,
   },
