@@ -41,6 +41,7 @@ export function Component(tagName: string) {
           }
 
           // Alpine im ShadowRoot initialisieren
+          console.info(`Initializing Alpine component: ${tagName}`);
           Alpine.initTree(this.shadow as unknown as HTMLElement);
         }
       }

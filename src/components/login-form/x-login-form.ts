@@ -2,13 +2,13 @@ import { Cookie, CookieStore } from "@/extra/utils/CookieStore";
 import { Failure, Success } from "@/shared/basic.response.types";
 import { LoginUserResponse, UserResponsePaths } from "@/shared/user.responses";
 import { Component } from "@decorator";
-import { xLoginFormStyle } from "@styles";
+import { globalStyle, xLoginFormStyle } from "@styles";
 import { xLoginFormTemplate } from "@templates";
 
 @Component("x-login-form")
 export class XLoginForm {
 
-  static styles = [xLoginFormStyle];
+  static styles = [xLoginFormStyle, globalStyle];
 
   static template = xLoginFormTemplate;
 
@@ -33,9 +33,11 @@ export class XLoginForm {
   }
 
   login() {
+    this.loading = true;
     api(UserResponsePaths.LoginUser, this.loginRequest)
       .then(this.handleResponse)
-      .catch(this.handleIssue);
+      .catch(this.handleIssue)
+      .finally(() => this.loading = false);
   }
 
   handleResponse(response: Success<LoginUserResponse>) {

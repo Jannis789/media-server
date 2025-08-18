@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<div class="register-container">
+  <form class="register-form" @submit.prevent="register()">
+    <h2>Registrieren</h2>
+    <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">Vorname</label>
+          <input type="text" id="first-name" name="first-name" placeholder="Max" required>
+        </div>
+        <div class="form-group">
+          <label for="last-name">Nachname</label>
+          <input type="text" id="last-name" name="last-name" placeholder="Mustermann" required>
+        </div>
+      </div>
+
+      <!-- E-Mail -->
+      <div class="form-group">
+        <label for="email" x-text="$i18n.email"></label>
+        <input type="email" id="email" name="email" placeholder="beispiel@mail.com" required>
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">Benutzername</label>
+        <input type="text" id="username" name="username" placeholder="Dein Benutzername" required>
+      </div>
+
+      <!-- Passwort + Passwort wiederholen nebeneinander -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Passwort</label>
+          <input type="password" id="password" name="password" placeholder="Passwort" required>
+        </div>
+        <div class="form-group">
+          <label for="password-confirm">Passwort wiederholen</label>
+          <input type="password" id="password-confirm" name="password-confirm" placeholder="Passwort" required>
+        </div>
+      </div>
+
+      <p>Schon ein Konto? <a href="#">Login</a></p>
+
+
+      <button type="submit" class="submit-btn">Registrieren</button>
+
+  </form>
+</div>

@@ -10,7 +10,7 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --logo-primary: #ddf;
-        --logo-accent:  #79d;
+        --logo-accent:  #89d;
       }
     }
     .textcolor-light { fill: #abd }

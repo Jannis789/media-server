@@ -9,7 +9,19 @@ function establishPineconeRouter(router: PineconeRouter) {
 	});
 
 	router.add('/', {
+		templates: ['/layouts/index.tmpl'],
+	});
+
+	router.add('/login', {
 		templates: ['/layouts/login.tmpl'],
+	});
+
+	router.add('/register', {
+		templates: ['/layouts/register.tmpl'],
+	});
+
+	router.add('notfound', {
+		templates: ['/layouts/error.tmpl'],
 	});
 }
 

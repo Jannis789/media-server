@@ -11,3 +11,4 @@ declare global {
     }
     function api<TResponse extends GenericResponse<any>>(input: string, init?: RequestInit): Promise<Success<TResponse>>;
 }
+

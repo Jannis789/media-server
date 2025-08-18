@@ -1,5 +1,5 @@
 @use '../../styles/global.xcss' as *;
-
+@use '../../styles/color-pallete.xcss' as *;
 .footer-content {
   padding: 0px $content-padding-width;
 
@@ -8,14 +8,14 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    border-radius: 22px;
-    background-color: #89d;
+    border-radius: $normal-spacing;
+    background-color: $accent;
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.06);
   }
 
   * {
-    color: #fff;
+    color: $white;
   }
 }

@@ -1,12 +1,12 @@
 @use '../../styles/global.xcss' as *;
 
 .main-content {
-    padding: 10px $content-padding-width;
+    padding: $small-spacing $content-padding-width;
     
     .content-area {
         display: flex;
         flex-direction: column;
         gap: 16px;
-        border-radius: 22px;
+        border-radius: $normal-spacing;
     }
 }

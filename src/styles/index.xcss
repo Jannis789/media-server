@@ -1,0 +1,3 @@
+// index.scss
+@use '../global.xcss' as g;
+@use '../color-pallete.xcss' as c;

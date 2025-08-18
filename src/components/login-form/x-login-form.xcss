@@ -1,31 +1,30 @@
+@use '../../styles/color-pallete.xcss' as *;
+@use '../../styles/global.xcss' as *;
+
 .login-container {
     min-height: 90vh;
-    background: linear-gradient(90deg,
-        rgba(238, 238, 255, 1) 0%, 
-        rgba(255, 255, 255, 1) 20%,
-        rgba(255, 255, 255, 1) 80%, 
-        rgba(238, 238, 255, 1) 100%);        
+    background: $bg-gradient;
     display: flex; 
     justify-content: center;
     align-items: center;
-    padding: 0 10px;
-    border-radius: 22px;
+    padding: 0 $small-spacing;
+    border-radius: $normal-spacing;
 }
 
 .login-form {
-    margin: 10px 0;
+    margin: $small-spacing 0;
     height: 540px;
     width: 450px;
-    background: #ffffffaa;
-    box-shadow: 0 0 16px rgba(0, 0, 0, .16);
+    background: $card-bg;
+    box-shadow: $accent-shadow;
     border-radius: 16px;
-    border: 2px solid rgba(230, 230, 255, .5);
+    border: 3px solid $white;
     overflow: auto; 
 
     .avatar-symbolic {
         width: 86px;
         height: 86px;
-        margin-top: 22px;
+        margin-top: $normal-spacing;
     }
 
     .login-title {
@@ -40,15 +39,14 @@
 
     .entry-rows {
         input {
-            margin: 1rem 0;
-            padding: 10px 8px;
+            margin: 0.6rem 0;
+            padding: 16px 8px;
             width: 85%;
-            height: 30px;
             border-radius: 8px;
             border: 1px solid rgba(230, 230, 255, .5);
-            background-color: rgba(255, 255, 255, .8);
+            background-color: $white;
             box-shadow: inset 0 0 4px rgba(0, 0, 0, .1);
-            font-size: 16px;
+            font-size: 18px;
             border: 2px solid rgba(230, 230, 255, .5);
         }
     }
@@ -58,24 +56,24 @@
         justify-content: space-between;
         width: 85%;
         flex-wrap: wrap;
-        gap: 8px;
         flex-direction: row;
+        padding: 6px;
     }
     .login-button {
         font-size: 1.6rem;
         font-weight: bold;
         padding: 8px 16px;
-        margin-top: 22px;
+        margin-top: $normal-spacing;
         width: 85%;
         border: 2px solid rgba(230, 230, 255, .5);
-        color: white;
+        color: $white;
         border-radius: 12px;
-        background-color: #89d;
+        background-color: $accent;
         transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
         &:hover {
             transform: translateY(-1px) scale(1.02);
-            background-color: #78c;
+            background-color: $accent-hover;
             cursor: pointer;
             box-shadow: 0 4px 16px rgba(136, 136, 221, 0.2);
         }

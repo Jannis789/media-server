@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <div class="login-container">
   <form class="login-form" @submit.prevent="login()">
     <center>
@@ -6,26 +7,26 @@
         alt="Default Avatar Symbolic"
         class="avatar-symbolic"
       />
-      <h2 class="login-title">Login</h2>
+      <h2 class="login-title" x-text="$i18n.login"></h2>
       <hr />
 
       <div class="entry-rows">
         <label for="email"></label>
         <input
-          type="input"
+          type="email"
           id="email"
           name="email"
-          placeholder="Email"
+          :placeholder="$i18n.email"
           x-model="email"
           required
         />
         <br />
         <label for="password"></label>
         <input
-          type="input"
+          type="password"
           id="password"
           name="password"
-          placeholder="Password"
+          :placeholder="$i18n.password"
           x-model="password"
           required
         />
@@ -33,23 +34,41 @@
 
       <div class="options">
         <label for="remember-me">
-          <input type="checkbox" x-model="remember" id="remember-me" name="remember-me" />
-          Remember me
+          <input
+            type="checkbox"
+            x-model="remember"
+            id="remember-me"
+            name="remember-me"
+          />
+          <span x-text="$i18n.rememberMe"></span>
         </label>
-        <a href="/forgot-password" class="forgot-password hyperlink"
-          >Forgot password?</a
-        >
+        <a
+          href="/forgot-password"
+          class="forgot-password hyperlink"
+          x-text="$i18n.forgotPassword"
+        ></a>
       </div>
 
-      <button type="submit" class="login-button" :disabled="loading" x-text="loading ? 'Logging in...' : 'Login'"></button>
+      <button
+        type="submit"
+        class="submit-button"
+        :disabled="loading"
+        x-text="loading ? $i18n.loggingIn : 'Login'"
+      ></button>
 
-      <div class="error-message" x-show="error" style="color: red; margin-top: 1em;">
+      <div
+        class="error-message"
+        x-show="error"
+        style="color: red; margin-top: 1em"
+      >
         <span x-text="error"></span>
       </div>
 
       <div class="new-user">
         <p>
-          Don't have an accout? <a class="hyperlink" href="/register">Signup</a>
+          <span x-text="$i18n.noAccount"></span>
+          &nbsp;
+          <a class="hyperlink" href="/register" x-text="$i18n.signup"></a>
         </p>
       </div>
     </center>
