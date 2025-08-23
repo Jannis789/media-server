@@ -1,0 +1,3 @@
+[submodule "src/core/shared"]
+	path = src/core/shared
+	url = https://github.com/Jannis789/media-server-types

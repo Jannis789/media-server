@@ -17,9 +17,21 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    /* Path aliases from vite.config.ts */
+    "baseUrl": ".",
+    "paths": {
+      "#decorators/*": ["src/core/decorators/*"],
+      "#utils/*": ["src/core/utils/*"],
+      "#routes/*": ["src/core/routes/*"],
+      "#components/*": ["src/components/*"],
+      "#public/*": ["public/*"]
+    }
   },
   "include": ["src"]
 }

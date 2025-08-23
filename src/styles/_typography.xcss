@@ -1,3 +1,77 @@
+// DEFAULT SPACING'S
+
+@space-xxs: 4px;
+@space-xs:  8px;
+@space-sm:  12px;
+@space-md:  16px;
+@space-lg:  24px;
+@space-xl:  32px;
+@space-xxl: 48px;
+
+@width-xs:  400px;
+@width-sm:  500px;
+@width-md:  600px;
+@width-lg:  700px;
+@width-xl:  800px;
+@width-xxl: 900px;
+
+@icon-xs:  16px;
+@icon-sm:  20px;
+@icon-md:  24px;
+@icon-lg:  32px;
+@icon-xl:  40px;
+@icon-xxl: 48px;
+@icon-xxxl: 64px;
+@icon-xxxxl: 80px;
+
+// SHADOWS
+@strong-shadow: 0 0 6px fade(@dark-400, 40%);
+
+// FONTS
+@font-face {
+  font-family: 'primary';
+  src: url('../../public/font/VarelaRound-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+a {
+    cursor: pointer;
+}
+
 * {
+    font-family: 'primary', sans-serif;
     box-sizing: border-box;
+}
+
+@body-padding: 10px max(4px, min(480px, calc(0.2 * 100vw - 115px)));
+@content-padding-width: calc(10px + 0.0234 * (100vw - 560px));
+
+body {
+    margin: 0;
+    padding: @body-padding;
+    background-color: @accent-300;
+    min-width: 360px;
+}
+
+x-body {
+    min-width: 320px;
+}
+
+hr {
+    border: 1px solid fade(@dark-400, 20%);
+    width: 100%;
+}
+
+// INPUTS ->
+.normal-input {
+    padding: @space-sm @space-md;
+    border-radius: @space-xs;
+    border: 1px solid fade(@dark-400, 30%);
+    font-size: 1rem;
+    &:focus {
+        border-color: @accent-500;
+        outline: none;
+        box-shadow: 0 0 4px fade(@accent-500, 50%);
+    }
 }

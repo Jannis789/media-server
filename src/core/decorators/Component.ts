@@ -1,54 +1,55 @@
 import Alpine from 'alpinejs';
 
-type Constructor<T extends HTMLElement = HTMLElement> = new (...args: any[]) => T;
+// Instanz-Map außerhalb der Component-Funktion
+const instanceMap = new WeakMap<HTMLElement, any>();
 
 export function Component(tagName: string) {
-  return function (Base: Constructor) {
+  return function (Base: new (host?: HTMLElement) => any & { styles?: CSSStyleSheet[], template?: DocumentFragment }) {
     if (!customElements.get(tagName)) {
-
-      // Alpine-Name aus tagName generieren (Bindestriche durch Unterstriche ersetzen)
       const alpineName = tagName.replace(/-/g, '_');
 
-      class CustomElement extends HTMLElement {
+      class NativeComponent extends HTMLElement {
         shadow: ShadowRoot;
         static styles = (Base as any).styles;
         static template = (Base as any).template;
 
-        constructor(..._args: any[]) {
+        constructor() {
           super();
           this.shadow = this.attachShadow({ mode: 'open' });
 
-          // Container pro Instanz
           const container = document.createElement('section');
           container.setAttribute('x-data', alpineName);
 
-          // Styles einfügen
-          const styles = CustomElement.styles as CSSStyleSheet[] | undefined;
+          const styles = NativeComponent.styles;
           if (styles) {
             this.shadow.adoptedStyleSheets = styles;
           }
 
-          // Template einfügen
-          const template = CustomElement.template as DocumentFragment | undefined;
+          const template = NativeComponent.template;
           if (template) {
             container.append(template.cloneNode(true));
           }
           this.shadow.append(container);
 
-          // Alpine-Data nur einmal pro alpineName registrieren @todo refactor
-          if (!(Alpine as any)._registeredComponents?.has(alpineName)) {
-            (Alpine as any)._registeredComponents ??= new Set();
-            (Alpine as any)._registeredComponents.add(alpineName);
-            Alpine.data(alpineName, () => new Base());
-          }
+          // host direkt beim Instanziieren übergeben
+          // Instanz in WeakMap speichern
+          const baseInstance = new Base(this);
+          instanceMap.set(this, baseInstance);
 
-          // Alpine im ShadowRoot initialisieren
-          console.info(`Initializing Alpine component: ${tagName}`);
+          Alpine.data(alpineName, () => {
+            // immer dieselbe Instanz für das Host-Element zurückgeben
+            const base =  instanceMap.get(this) ?? new Base(this);
+            if (typeof base.setup === 'function') {
+              base.setup(this);
+            }
+            return base;
+          });
+
           Alpine.initTree(this.shadow as unknown as HTMLElement);
         }
       }
 
-      customElements.define(tagName, CustomElement);
+      customElements.define(tagName, NativeComponent);
     }
   };
 }

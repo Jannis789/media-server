@@ -1,3 +1,5 @@
-import style from '/styles/global.xcss';
+import { setup } from "./core/utils/setup";
 
-document.adoptedStyleSheets = [style];
+(async () => {
+    setup();
+})();

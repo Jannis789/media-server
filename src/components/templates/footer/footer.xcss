@@ -1,0 +1,22 @@
+
+@import '../../../styles/global.xcss';
+
+.footer-content {
+  padding: 0px @content-padding-width;
+
+  .footer-area {
+    min-height: 74px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: @space-md;
+    background-color: @accent-400;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.06);
+  }
+
+  * {
+    color: @white;
+  }
+}

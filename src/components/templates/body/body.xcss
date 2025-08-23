@@ -1,0 +1,22 @@
+@import '../../../styles/global.xcss';
+
+
+@bg-gradient: linear-gradient(90deg,
+    @accent-200 0%, 
+    @accent-100 15%,
+    @accent-100 85%, 
+    @accent-200 100%);
+
+.main-content {
+    padding: @space-sm @content-padding-width;
+    
+    .content-area {
+        display: flex;
+        flex-direction: column;
+        border-radius: @space-md;
+
+        background: @bg-gradient;
+        height: auto;
+        max-height: max(624px, calc(100vh - 108px));
+    }
+}

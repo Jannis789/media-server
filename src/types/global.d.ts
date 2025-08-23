@@ -1,9 +1,12 @@
-module "*.xcss" {
-  const content: CSSStyleSheet;
-  export default content;
-}
+import type Alpine from "alpinejs";
+import type { PineconeRouter } from "pinecone-router";
 
-declare module "*.tmpl" {
-  const content: DocumentFragment;
-  export default content;
+export {};
+
+declare global {
+  interface Window {
+    Alpine: Alpine;
+  }
+  function api(input: string, init?: any): any; // @todo use the correct type
+  var app: PineconeRouter;
 }

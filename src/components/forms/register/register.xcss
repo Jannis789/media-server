@@ -1,0 +1,123 @@
+@import '../../../styles/global.xcss';
+
+.register-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: @space-lg;
+    min-height: 90vh;
+
+    .register-form {
+        padding: @space-xl;
+        border-radius: @space-sm;
+        box-shadow: @strong-shadow;
+        width: 100%;
+        max-width: @width-sm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: @space-md;
+        background-color: @light-bg;
+        border: 3px solid @white;
+
+        h2 {
+            margin: 0;
+        }
+
+        hr {
+            margin: 0;
+        }
+
+        .input-box {
+            width: 100%;
+            display: flex;
+            gap: @space-xs;
+            background: @accent-200;
+            border-radius: @space-xs;
+            border: 1px solid fade(@dark-400, 30%);
+            padding: @space-xxs;
+
+            x-icon {
+                width: @icon-md;
+                height: @icon-md;
+                background: @dark-400;
+            }
+
+            x-icon.left-symbolic {
+                vertical-align: middle;
+                margin: @space-xs 0 @space-xs @space-xs;
+            }
+
+            x-icon.right-symbolic {
+                vertical-align: middle;
+                margin: @space-xs @space-xs @space-xs 0;
+                cursor: pointer;
+                
+                &:hover {
+                    background: @dark-500;
+                }
+            }
+
+            @media (max-width: 360px) {
+                x-icon.right-symbolic {
+                    display: none !important;
+                }
+            }
+
+            input {
+                flex: 1;
+                min-width: 120px;
+                max-width: 100%;
+                border-radius: @space-xs;
+                border: 1px solid fade(@dark-400, 30%);
+                padding-left: @space-xs;
+                box-sizing: border-box;
+                min-width: 80px;
+            }
+
+        }
+        .remember {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: @space-md;
+                flex-wrap: wrap;
+
+                label {
+                    display: flex;
+                    align-items: center;
+                    gap: @space-xs;
+                
+                    input[type="checkbox"] {
+                        width: @space-md;
+                        height: @space-md;
+                    }
+                }
+            
+                a {
+                    color: @accent-600;
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+        button {
+                        width: 100%;
+            padding: @space-sm 0;
+            background-color: @accent-600;
+            color: @white;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: @space-xs;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            &:hover {
+                background-color: @accent-700;
+            }
+        }
+    }
+}
