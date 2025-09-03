@@ -38,10 +38,16 @@ export function Component(tagName: string) {
 
           Alpine.data(alpineName, () => {
             // immer dieselbe Instanz für das Host-Element zurückgeben
-            const base =  instanceMap.get(this) ?? new Base(this);
+            const base = instanceMap.get(this);
             if (typeof base.setup === 'function') {
               base.setup(this);
             }
+
+            Object.defineProperty(base, 'host', {
+              get: () => this,
+              configurable: true,
+            });
+
             return base;
           });
 

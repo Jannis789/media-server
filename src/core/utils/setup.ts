@@ -4,6 +4,7 @@ import { setupDefaultRoutes } from "#routes/DefaultRoutes";
 import { setupApiCommunicator } from "#utils/ApiCommunicatior";
 
 import globalStyle from "/styles/global.xcss";
+import { setupCookieStore } from "./CookieManager";
 import.meta.glob('#components/**/*.ts', {eager: true});
 
 export function setup() {
@@ -16,6 +17,7 @@ export function setup() {
     // PHASE 2
     setupDefaultRoutes();
     setupApiCommunicator();
+    setupCookieStore();
     setupLightDomStyles();
     Alpine.start();
 

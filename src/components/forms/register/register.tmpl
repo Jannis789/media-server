@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 
 <div class="register-form-container">
-    <form class="register-form">
-        <h2>Registration</h2>
+    <form class="register-form" @submit.prevent="register()">
+        <h1>Registration</h1>
         <hr>
         
         <div class="input-box">
-            <x-icon class="left-symbolic" name="system-users-symbolic"></x-icon>
-            <input type="text" placeholder="Username" required />
+            <x-icon data-field="username" class="left-symbolic" name="username-symbolic"></x-icon>
+            <input type="text" x-model="username" placeholder="Username" required />
         </div>
 
         <div class="input-box">
-            <x-icon class="left-symbolic" name="mail-symbolic"></x-icon>
-            <input type="email" placeholder="Email" required />
+            <x-icon data-field="email" class="left-symbolic" name="email-symbolic"></x-icon>
+            <input type="email" x-model="email" placeholder="Email" required />
         </div>
 
         <div class="input-box">
-            <x-icon class="left-symbolic" name="password-symbolic"></x-icon>
+            <x-icon data-field="password" class="left-symbolic" name="password-symbolic"></x-icon>
 
-            <input :type="revealPassword ? 'text' : 'password'" placeholder="Password" required />
+            <input :type="revealPassword ? 'text' : 'password'" x-model="password" placeholder="Password" required />
         
             <template x-if="!revealPassword">
                 <x-icon class="right-symbolic" name="view-conceal-symbolic" @click="revealPassword = true"></x-icon>
@@ -31,9 +31,9 @@
 
 
         <div class="input-box">
-            <x-icon class="left-symbolic" name="password-symbolic"></x-icon>
+            <x-icon data-field="password-confirmation" class="left-symbolic password-confirmation" name="password-symbolic"></x-icon>
             
-            <input :type="revealConfirmPassword ? 'text' : 'password'" placeholder="Password" required />
+            <input :type="revealConfirmPassword ? 'text' : 'password'" x-model="passwordConfirmation" placeholder="Password" required />
         
             <template x-if="!revealConfirmPassword">
                 <x-icon class="right-symbolic" name="view-conceal-symbolic" @click="revealConfirmPassword = true"></x-icon>
@@ -45,7 +45,7 @@
         </div>
         
         <div class="remember">
-            <label><input type="checkbox" />Remember me</label>
+            <label><input type="checkbox" x-model="remember"/>Remember me</label>
             <a href="#">Forgot Password?</a>
         </div>
 

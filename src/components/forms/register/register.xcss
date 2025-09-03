@@ -20,10 +20,6 @@
         background-color: @light-bg;
         border: 3px solid @white;
 
-        h2 {
-            margin: 0;
-        }
-
         hr {
             margin: 0;
         }
@@ -38,18 +34,14 @@
             padding: @space-xxs;
 
             x-icon {
-                width: @icon-md;
-                height: @icon-md;
-                background: @dark-400;
+                .default-icon();
             }
 
             x-icon.left-symbolic {
-                vertical-align: middle;
                 margin: @space-xs 0 @space-xs @space-xs;
             }
 
             x-icon.right-symbolic {
-                vertical-align: middle;
                 margin: @space-xs @space-xs @space-xs 0;
                 cursor: pointer;
                 
@@ -66,13 +58,7 @@
 
             input {
                 flex: 1;
-                min-width: 120px;
-                max-width: 100%;
-                border-radius: @space-xs;
-                border: 1px solid fade(@dark-400, 30%);
-                padding-left: @space-xs;
-                box-sizing: border-box;
-                min-width: 80px;
+                .default-input();
             }
 
         }
@@ -104,19 +90,16 @@
                 }
             }
 
-        button {
-                        width: 100%;
-            padding: @space-sm 0;
-            background-color: @accent-600;
-            color: @white;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: @space-xs;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            &:hover {
-                background-color: @accent-700;
+        button[type="submit"] {
+            width: 100%;
+            .default-submit-button();
+        }
+
+        p, a {
+            font-size: 0.9rem;
+
+            a {
+                .hyperlink();
             }
         }
     }

@@ -5,46 +5,71 @@ import iconStyle from "./icon.xcss";
 export class XIcon {
     static styles = [iconStyle];
 
-    setup(host?: HTMLElement) {
-        const el = host;
-        if (!el?.hasAttribute('name')) {
-            console.warn('x-icon: The "name" attribute is required for this component.');
-            return;
+    setup(host: HTMLElement) {
+        const uri = this.fetchIcon(host);
+        this.createIconElementData(uri, host);
+
+        this.observeAttributes(host, (attr, val) => {
+            console.info(`Attribut ${attr} changed to: ${val}`);
+            // wenn sich z.B. name, size oder color ändert -> neu rendern
+            if (attr === "name") {
+                const newUri = this.fetchIcon(host);
+                this.createIconElementData(newUri, host);
+            }
+            if (attr === "size" || attr === "color") {
+                this.createIconElementData(uri, host);
+            }
+        }, ["name", "size", "color"]);
+    }
+
+    fetchIcon(host: HTMLElement): string {
+        if (!host.hasAttribute('name')) {
+            throw new Error('x-icon: The "name" attribute is required for this component.');
         }
 
-        const iconName = el.getAttribute('name');
+        const iconName = host.getAttribute('name');
         const modules = import.meta.glob('#public/icons/**/*.svg');
 
         for (const path in modules) {
-            // Extract file name without extension
             const fileName = path.split('/').pop()?.replace('.svg', '');
-            if (fileName !== iconName)
-                continue;
-            const uri = path.replace('../public/', '/');
-            this.createIconElementData(uri, el);
-            return;
+            if (fileName !== iconName) continue;
+            return path.replace('../public/', '/');
         }
 
-        console.error(`x-icon: Icon with name "${iconName}" not found.`);
+        throw new Error(`x-icon: Icon with name "${iconName}" not found.`);
     }
 
-    createIconElementData(uri: string, el?: HTMLElement) {
-        const hostEl = el;
-        if (!hostEl) return;
-
-        const size = hostEl.getAttribute('size') || null;
-        const color = hostEl.getAttribute('color') || null;
+    createIconElementData(uri: string, el: HTMLElement) {
+        const size = el.getAttribute('size');
+        const color = el.getAttribute('color');
 
         if (size) {
-            hostEl.style.width = size;
-            hostEl.style.height = size;
+            el.style.width = size;
+            el.style.height = size;
         }
-        if (color)
-            hostEl.style.background = color;
-        
-        hostEl.style.maskImage = `url('${uri}')`;
-        hostEl.style.maskRepeat = 'no-repeat';
-        hostEl.style.maskSize = 'contain';
-        hostEl.style.display = 'inline-block';
+        if (color) {
+            el.style.background = color;
+        }
+
+        el.style.maskImage = `url('${uri}')`;
+        el.style.maskRepeat = 'no-repeat';
+        el.style.maskSize = 'contain';
+        el.style.display = 'inline-block';
+    }
+
+    observeAttributes(
+        el: HTMLElement,
+        callback: (attr: string, value: string | null) => void,
+        filter: string[] | null = null
+    ) {
+        const observer = new MutationObserver(mutations => {
+            for (const m of mutations) {
+                if (m.type === "attributes" && m.attributeName) {
+                    callback(m.attributeName, el.getAttribute(m.attributeName));
+                }
+            }
+        });
+        observer.observe(el, { attributes: true, attributeFilter: filter || undefined });
+        return observer;
     }
 }
