@@ -1,26 +1,26 @@
-@import './_colors.xcss'; 
+@import './_colors.xcss';
 // DEFAULT SPACING'S
 
 @space-xxs: 4px;
-@space-xs:  8px;
-@space-sm:  12px;
-@space-md:  16px;
-@space-lg:  24px;
-@space-xl:  32px;
+@space-xs: 8px;
+@space-sm: 12px;
+@space-md: 16px;
+@space-lg: 24px;
+@space-xl: 32px;
 @space-xxl: 48px;
 
-@width-xs:  400px;
-@width-sm:  500px;
-@width-md:  600px;
-@width-lg:  700px;
-@width-xl:  800px;
+@width-xs: 400px;
+@width-sm: 500px;
+@width-md: 600px;
+@width-lg: 700px;
+@width-xl: 800px;
 @width-xxl: 900px;
 
-@icon-xs:  16px;
-@icon-sm:  20px;
-@icon-md:  24px;
-@icon-lg:  32px;
-@icon-xl:  40px;
+@icon-xs: 16px;
+@icon-sm: 20px;
+@icon-md: 24px;
+@icon-lg: 32px;
+@icon-xl: 40px;
 @icon-xxl: 48px;
 @icon-xxxl: 64px;
 @icon-xxxxl: 80px;
@@ -30,10 +30,10 @@
 
 // FONTS
 @font-face {
-  font-family: 'primary';
-  src: url('/font/AdwaitaSans-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'primary';
+    src: url('/font/AdwaitaSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 input {
@@ -47,6 +47,7 @@ a {
 .hyperlink {
     color: @accent-600;
     text-decoration: none;
+
     &:hover {
         text-decoration: underline;
         color: @accent-800;
@@ -104,6 +105,7 @@ hr {
     border-radius: @space-xs;
     cursor: pointer;
     transition: background-color 0.2s ease;
+
     &:hover {
         background-color: @accent-700;
     }
@@ -115,20 +117,45 @@ h1 {
     margin-bottom: @space-md;
 }
 
-.tooltip {
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+
+  &::after {
+    content: attr(data-tooltip);
     position: absolute;
-    z-index: 1000;
-    background: @accent-700;
-    color: @white;
-    padding: @space-xs @space-sm;
-    border-radius: @space-xs;
-    box-shadow: 0 2px 8px fade(@dark-400, 30%);
-    font-size: 0.95em;
-    max-width: 220px;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: @white;
+    color: @text-300;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    border: 1px solid @accent-400;
+    border-radius: 6px;
+    box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.1),
+      0px 3px 4px 0px rgba(0, 0, 0, 0.07),
+      0px 1px 8px 0px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(4px);
+
+    /* Text layout */
+    max-width: min(300px, 40vw);
+    min-width: 120px;
+    width: 380px;
     white-space: pre-line;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    /* Start hidden */
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    margin: 6px;
-    transform: translate(calc(-50% + 12px), -100%);
-    opacity: 0.95;
-    transition: opacity 0.15s;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
 }

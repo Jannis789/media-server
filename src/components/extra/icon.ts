@@ -6,27 +6,26 @@ export class XIcon {
     static styles = [iconStyle];
 
     setup(host: HTMLElement) {
-        const uri = this.fetchIcon(host);
-        this.createIconElementData(uri, host);
+        if (host.hasAttribute('name') && host.getAttribute('name')) {
+            console.log(host);
+            const uri = this.fetchIcon(host);
+            this.createIconElementData(uri, host);
+        }
 
         this.observeAttributes(host, (attr, val) => {
             console.info(`Attribut ${attr} changed to: ${val}`);
             // wenn sich z.B. name, size oder color ändert -> neu rendern
-            if (attr === "name") {
+            if (attr === "name" && host.hasAttribute('name')) {
                 const newUri = this.fetchIcon(host);
                 this.createIconElementData(newUri, host);
             }
-            if (attr === "size" || attr === "color") {
-                this.createIconElementData(uri, host);
+            if ((attr === "size" && host.hasAttribute('size')) || (attr === "color" && host.hasAttribute('color'))) {
+                this.createIconElementData(this.fetchIcon(host), host);
             }
         }, ["name", "size", "color"]);
     }
 
     fetchIcon(host: HTMLElement): string {
-        if (!host.hasAttribute('name')) {
-            throw new Error('x-icon: The "name" attribute is required for this component.');
-        }
-
         const iconName = host.getAttribute('name');
         const modules = import.meta.glob('#public/icons/**/*.svg');
 

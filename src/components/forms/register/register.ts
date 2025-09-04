@@ -3,7 +3,6 @@ import registerFormStyle from './register.xcss';
 import registerFormTemplate from './register.tmpl';
 import { UserResponsePaths, type CreateUserResponse } from "../../../core/shared/user.responses";
 import type { Failure, Success } from "src/core/shared/basic.response.types";
-import { removeTooltipIfExists, setTooltip } from "#components/extra/tooltip";
 
 @Component('x-register-form')
 export class XRegisterForm {
@@ -28,7 +27,7 @@ export class XRegisterForm {
 
     host!: HTMLElement;
 
-    previousErrorIconElements: HTMLElement[] = [];
+    errors: Record<string, string[]> = {};
 
     private get registerRequest() {
         return {
@@ -46,24 +45,6 @@ export class XRegisterForm {
     }
 
     register() {
-        for (const prevEle of this.previousErrorIconElements) {
-            this.showErrorIcon(prevEle, false);
-            removeTooltipIfExists(prevEle);
-        }
-        
-        this.previousErrorIconElements.length = 0;
-
-        const root = this.host.shadowRoot;
-        const ele = root?.querySelector('[data-field="password-confirmation"]') as HTMLElement | null | undefined;
-        if (!ele) return;
-        if (this.password !== this.passwordConfirmation) {
-            this.showErrorIcon(ele, true);
-            setTooltip(ele, "Passwords do not match");
-        } else {
-            this.showErrorIcon(ele, false);
-            removeTooltipIfExists(ele);
-        }
-
         api(UserResponsePaths.CreateUser, this.registerRequest)
             .then(this.handleResponse)
             .catch(this.handleIssue.bind(this));
@@ -83,35 +64,18 @@ export class XRegisterForm {
     }
 
     handleIssue(e: Failure<CreateUserResponse>) {
-        const root = this.host.shadowRoot;
+
+        if (this.password !== this.passwordConfirmation) {
+            this.errors['password-confirmation'] = ["Passwords do not match."];
+        }
+
         e.error.fields.forEach(fieldError => {
-            const {field, messages} = fieldError;
-            const ele = root?.querySelector(`[data-field="${field}"]`) as HTMLElement | null | undefined;
-            if (!ele) return;
-
-            this.previousErrorIconElements.push(ele);
-            this.showErrorIcon(ele, true);
-
-            const tooltipContent = messages.join('\n');
-            setTooltip(ele, tooltipContent);
+            const { field, messages } = fieldError;
+            this.errors[field] = messages;
         });
     }
 
-    showErrorIcon(ele: HTMLElement, show: boolean) {
-        const ERROR_ICON = 'dialog-warning-symbolic';
-        const ERROR_BG = 'red';
-
-        if (show) {
-            ele.dataset.previousToggleState = ele.getAttribute('name') || '';
-            ele.setAttribute('name', ERROR_ICON);
-            ele.style.background = ERROR_BG;
-        } else {
-            const prevState = ele.dataset.previousToggleState;
-            if (prevState !== undefined) {
-                ele.setAttribute('name', prevState);
-                delete ele.dataset.previousToggleState;
-            }
-            ele.style.background = "";
-        }
+    hasErrors(field: string): boolean {
+        return Array.isArray(this.errors[field]) && this.errors[field].length > 0;
     }
 }

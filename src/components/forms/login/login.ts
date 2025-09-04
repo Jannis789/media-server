@@ -3,7 +3,6 @@ import LoginFromStyle from './login.xcss';
 import LoginFormTemplate from './login.tmpl';
 import { UserResponsePaths, type LoginUserResponse } from "../../../core/shared/user.responses";
 import type { Failure, Success } from "src/core/shared/basic.response.types";
-import { setTooltip } from "#components/extra/tooltip";
 
 @Component('x-login-form')
 export class XLoginForm {
