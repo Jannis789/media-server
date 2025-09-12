@@ -26,3 +26,5 @@
 @text-300: #347;
 @text-200: #458;
 @text-100: #569;
+
+@error-default: #f44 !important;

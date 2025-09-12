@@ -109,3 +109,7 @@
         }
     }
 }
+
+x-icon[name='dialog-warning-symbolic'] {
+    background: @error-default;
+}

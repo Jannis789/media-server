@@ -4,6 +4,13 @@ import registerFormTemplate from './register.tmpl';
 import { UserResponsePaths, type CreateUserResponse } from "../../../core/shared/user.responses";
 import type { Failure, Success } from "src/core/shared/basic.response.types";
 
+enum RegistrationFields {
+    USERNAME = "username",
+    EMAIL = "email",
+    PASSWORD = "password",
+    PASSWORD_CONFIRMATION = "password-confirmation"
+}
+
 @Component('x-register-form')
 export class XRegisterForm {
 
@@ -27,7 +34,12 @@ export class XRegisterForm {
 
     host!: HTMLElement;
 
-    errors: Record<string, string[]> = {};
+    errors: Record<string, string[]> = {
+        [RegistrationFields.USERNAME]: [],
+        [RegistrationFields.EMAIL]: [],
+        [RegistrationFields.PASSWORD]: [],
+        [RegistrationFields.PASSWORD_CONFIRMATION]: []
+    };
 
     private get registerRequest() {
         return {
@@ -64,6 +76,12 @@ export class XRegisterForm {
     }
 
     handleIssue(e: Failure<CreateUserResponse>) {
+        console.error("Registration failed with Error");
+
+        for (const field of Object.values(RegistrationFields)) {
+            const inputEle = this.host.shadowRoot!.querySelector(`input[data-field-name="${field}"]`);
+            inputEle?.addEventListener('input', () => this.errors[field] = [], { once: true });
+        }
 
         if (this.password !== this.passwordConfirmation) {
             this.errors['password-confirmation'] = ["Passwords do not match."];
@@ -75,7 +93,11 @@ export class XRegisterForm {
         });
     }
 
-    hasErrors(field: string): boolean {
-        return Array.isArray(this.errors[field]) && this.errors[field].length > 0;
+    getErrorMessage(field: string): string {
+        let res = '';
+        for (const msg of this.errors[field] || []) {
+            res += '• ' + msg + '\n';
+        }
+        return res;
     }
 }

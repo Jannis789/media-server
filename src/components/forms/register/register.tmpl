@@ -6,86 +6,79 @@
         <hr>
 
         <div class="input-box">
-            <span x-bind:data-tooltip="hasErrors('username') ? errors['username'].join(', ') : null">
-
-                <x-icon 
-                    data-field="username" class="left-symbolic"
-                    :name="hasErrors('username') ? 'dialog-warning-symbolic' : 'username-symbolic'">
+            <span x-bind:data-tooltip="getErrorMessage('username')">
+                <x-icon data-field="username" class="left-symbolic"
+                    :name="getErrorMessage('username') !== '' ? 'dialog-warning-symbolic' : 'username-symbolic'">
                 </x-icon>
-            
             </span>
-
-            <input 
-                type="text" 
-                x-model="username" 
-                placeholder="Username" 
+            <input type="text"
+                data-field-name="username"
+                x-model="username"
+                placeholder="Username"
                 required />
         </div>
 
         <div class="input-box">
-            <span x-bind:data-tooltip="hasErrors('email') ? errors['email'].join(', ') : null">
-                <x-icon data-field="email" 
-                    class="left-symbolic"
-                    :name="hasErrors('email') ? 'dialog-warning-symbolic' : 'email-symbolic'">
+            <span x-bind:data-tooltip="getErrorMessage('email')">
+                <x-icon data-field="email" class="left-symbolic"
+                    :name="getErrorMessage('email') !== '' ? 'dialog-warning-symbolic' : 'email-symbolic'">
                 </x-icon>
             </span>
-            <input type="text" 
-                x-model="email" 
-                placeholder="Email" 
+            <input type="text"
+                data-field-name="email"
+                x-model="email"
+                placeholder="Email"
                 required />
         </div>
 
         <div class="input-box">
-            <span x-bind:data-tooltip="hasErrors('password') ? errors['password'].join(', ') : null">
-                <x-icon data-field="password" 
-                    class="left-symbolic"
-                    :name="hasErrors('password') ? 'dialog-warning-symbolic' : 'password-symbolic'">
+            <span x-bind:data-tooltip="getErrorMessage('password')">
+                <x-icon data-field="password" class="left-symbolic"
+                    :name="getErrorMessage('password') !== '' ? 'dialog-warning-symbolic' : 'password-symbolic'">
                 </x-icon>
             </span>
-
-            <input :type="revealPassword ? 'text' : 'password'" 
-                x-model="password" 
-                placeholder="Password" 
+            <input :type="revealPassword ? 'text' : 'password'"
+                data-field-name="password"
+                x-model="password"
+                placeholder="Password"
                 required />
 
             <template x-if="!revealPassword">
-                <x-icon class="right-symbolic" 
-                    name="view-conceal-symbolic" 
+                <x-icon class="right-symbolic"
+                    name="view-conceal-symbolic"
                     @click="revealPassword = true">
                 </x-icon>
             </template>
 
             <template x-if="revealPassword">
-                <x-icon class="right-symbolic" 
-                    name="view-reveal-symbolic" 
+                <x-icon class="right-symbolic"
+                    name="view-reveal-symbolic"
                     @click="revealPassword = false">
                 </x-icon>
             </template>
         </div>
 
-
         <div class="input-box">
-            <span x-bind:data-tooltip="hasErrors('password-confirmation') ? errors['password-confirmation'].join(', ') : null">
-                <x-icon data-field="password-confirmation" 
-                    class="left-symbolic password-confirmation"
-                    :name="hasErrors('password-confirmation') ? 'dialog-warning-symbolic' : 'password-symbolic'">
+            <span x-bind:data-tooltip="getErrorMessage('password-confirmation')">
+                <x-icon data-field="password-confirmation" class="left-symbolic password-confirmation"
+                    :name="getErrorMessage('password-confirmation') !== '' ? 'dialog-warning-symbolic' : 'password-symbolic'">
                 </x-icon>
             </span>
-
-            <input :type="revealConfirmPassword ? 'text' : 'password'" 
+            <input :type="revealConfirmPassword ? 'text' : 'password'"
+                data-field-name="password-confirmation"
                 x-model="passwordConfirmation"
-                placeholder="Password" 
+                placeholder="Password"
                 required />
 
             <template x-if="!revealConfirmPassword">
-                <x-icon class="right-symbolic" 
+                <x-icon class="right-symbolic"
                     name="view-conceal-symbolic"
                     @click="revealConfirmPassword = true">
                 </x-icon>
             </template>
 
             <template x-if="revealConfirmPassword">
-                <x-icon class="right-symbolic" 
+                <x-icon class="right-symbolic"
                     name="view-reveal-symbolic"
                     @click="revealConfirmPassword = false">
                 </x-icon>

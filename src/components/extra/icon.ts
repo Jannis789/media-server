@@ -7,7 +7,6 @@ export class XIcon {
 
     setup(host: HTMLElement) {
         if (host.hasAttribute('name') && host.getAttribute('name')) {
-            console.log(host);
             const uri = this.fetchIcon(host);
             this.createIconElementData(uri, host);
         }

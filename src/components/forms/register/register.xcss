@@ -106,5 +106,5 @@
 }
 
 x-icon[name='dialog-warning-symbolic'] {
-    background: #f44 !important;
+    background: @error-default;
 }

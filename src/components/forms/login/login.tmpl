@@ -6,12 +6,23 @@
         <h1>Login</h1>
         <hr>
         <div class="input-box">
-            <x-icon class="left-symbolic" name="email-symbolic"></x-icon>
+            <span x-bind:data-tooltip="getErrorMessage('email')">
+                <x-icon data-field="email" class="left-symbolic"
+                    :name="getErrorMessage('email') !== '' ? 'dialog-warning-symbolic' : 'email-symbolic'">
+                </x-icon>
+            </span>
             <input type="text" x-model="email" placeholder="Email" required />
         </div>
         <div class="input-box">
-            <x-icon class="left-symbolic" name="password-symbolic"></x-icon>
-            <input :type="revealPassword ? 'text' : 'password'" x-model="password" id="password" placeholder="Password" required autocomplete="new-password" />
+
+            <span x-bind:data-tooltip="getErrorMessage('password')">
+                <x-icon data-field="password" class="left-symbolic"
+                    :name="getErrorMessage('password') !== '' ? 'dialog-warning-symbolic' : 'password-symbolic'">
+                </x-icon>
+            </span>
+
+            <input :type="revealPassword ? 'text' : 'password'" x-model="password" id="password" placeholder="Password"
+                required autocomplete="new-password" />
             <template x-if="!revealPassword">
                 <x-icon class="right-symbolic" name="view-conceal-symbolic" @click="revealPassword = true"></x-icon>
             </template>
