@@ -16,6 +16,7 @@
     "vite": "^7.1.2"
   },
   "dependencies": {
+    "@types/less": "^3.0.8",
     "@types/node": "^24.3.0"
   }
 }
