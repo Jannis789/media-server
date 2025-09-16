@@ -3,7 +3,7 @@
 <div class="login-form-container">
     <form class="login-form" @submit.prevent="login()">
         <x-icon name="avatar-default-symbolic" class="icon"></x-icon>
-        <h1>Login</h1>
+        <h1 x-text="$i18n.login"></h1>
         <hr>
         <div class="input-box">
             <span x-bind:data-tooltip="getErrorMessage('email')">
@@ -13,6 +13,7 @@
             </span>
             <input type="text" x-model="email" placeholder="Email" required />
         </div>
+
         <div class="input-box">
 
             <span x-bind:data-tooltip="getErrorMessage('password')">

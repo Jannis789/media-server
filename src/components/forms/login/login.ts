@@ -3,6 +3,7 @@ import LoginFromStyle from './login.xcss';
 import LoginFormTemplate from './login.tmpl';
 import { UserResponsePaths, type LoginUserResponse } from "../../../core/shared/user.responses";
 import type { Failure, Success } from "src/core/shared/basic.response.types";
+import { log } from "#utils/logger";
 
 enum LoginFields {
     EMAIL = "email",
@@ -48,6 +49,7 @@ export class XLoginForm {
 
     login() {
         this.loading = true;
+        this.errors = {};
         api(UserResponsePaths.LoginUser, this.loginRequest)
             .then(this.handleResponse.bind(this))
             .catch(this.handleIssue.bind(this))
@@ -65,7 +67,7 @@ export class XLoginForm {
 
         cookie.value = session;
         cookie.expires = expiresAt;
-        console.info(`Login successful. Session cookie "${cookie.name}" updated with new session key: ${session}`);
+        log.component(`Login successful. Session cookie "${cookie.name}" updated with new session key: ${session}`);
     }
 
     handleIssue(e: Failure<LoginUserResponse>) {

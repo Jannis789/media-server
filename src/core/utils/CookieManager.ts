@@ -1,4 +1,17 @@
+import { status } from "./setup";
+
 export class CookieManager {
+
+    static initStore() {
+        if (!window.CookieManager) {
+            window.CookieManager = new CookieManager();
+        }
+        if (!window.Cookie) {
+            window.Cookie = Cookie;
+        }
+        status.initialized.cookies = true;
+    }
+
     get cookieRaw(): string {
         return document.cookie;
     }
@@ -82,11 +95,3 @@ export class Cookie {
     }
 }
 
-export function setupCookieStore() {
-    if (!window.CookieManager) {
-        window.CookieManager = new CookieManager();
-    }
-    if (!window.Cookie) {
-        window.Cookie = Cookie;
-    }
-}

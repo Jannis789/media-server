@@ -27,14 +27,12 @@ export function xcssPlugin(): Plugin {
     },
 
     handleHotUpdate({ file, server }) {
-  console.log("XCSS Plugin - File changed:", file);
       if (file.endsWith(".xcss")) {
         const mod =
           server.moduleGraph.getModuleById(file) ||
           server.moduleGraph.getModuleById(file.slice(file.indexOf("/src/")));
         if (mod) {
           server.moduleGraph.invalidateModule(mod);
-          console.log("XCSS Plugin - Reloading page due to XCSS changes");
           server.ws.send({ type: 'full-reload', path: '*' });
           return [mod];
         }
@@ -45,11 +43,9 @@ export function xcssPlugin(): Plugin {
             if (m) server.moduleGraph.invalidateModule(m);
           }
         }
-        console.log("XCSS Plugin - Reloading page due to XCSS changes");
         server.ws.send({ type: 'full-reload', path: '*' });
         return [];
       }
-      console.log("XCSS Plugin - Reloading page due to XCSS changes");
       server.ws.send({ type: 'full-reload', path: '*' });
     },
   };

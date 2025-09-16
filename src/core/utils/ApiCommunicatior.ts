@@ -1,4 +1,20 @@
 import type { Failure, GenericResponse, Success } from "../shared/basic.response.types";
+import { getLocalIsoCode } from "./language/LanguageUtil";
+import { status } from "./setup";
+
+// Ergänzt beliebige Header in RequestInit
+export function communicatorAppendHead(headers: Record<string, string>, init?: RequestInit): RequestInit {
+    let result: RequestInit = { ...(init || {}) };
+    if (result.headers instanceof Headers) {
+        for (const key in headers) {
+            result.headers.append(key, headers[key]);
+        }
+    } else {
+        result.headers = { ...(result.headers as Record<string, string> || {}), ...headers };
+    }
+    return result;
+}
+
 
 // Helper: rekursiv Date-Strings erkennen und in Date umwandeln
 function reviveDates(obj: any): any {
@@ -28,12 +44,20 @@ export function setupApiCommunicator() {
         return new Promise(async (resolve, reject) => {
             let res: Response;
 
+            const cookie = CookieManager?.cookies?.['session_key'];
+            const reqInit = communicatorAppendHead(
+                {
+                    ...(cookie && { "x-Session-UUID": cookie.value }),
+                    'Accept-Language': getLocalIsoCode()
+                },
+                init
+            );
+
             try {
-                res = await fetch("http://localhost:3000" + input, init);
+                res = await fetch("http://localhost:3000" + input, reqInit);
             } catch (err) {
-                // Netzwerkfehler intern behandeln, kein reject
                 console.error("Netzwerkfehler abgefangen:", err);
-                return; // Promise bleibt ungelöst → then/catch beim Aufrufer wird nicht getriggert
+                return;
             }
 
             const contentType = res.headers.get("content-type");
@@ -44,7 +68,7 @@ export function setupApiCommunicator() {
                     data = await res.json();
                     data = reviveDates(data);
                 } catch {
-                    data = null; // JSON kaputt, aber kein reject
+                    data = null;
                 }
             } else {
                 try {
@@ -64,5 +88,5 @@ export function setupApiCommunicator() {
             resolve(data as Success<TResponse>);
         });
     };
-
+    status.initialized.apiCommunicator = true;
 }

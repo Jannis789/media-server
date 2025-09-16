@@ -11,9 +11,7 @@ export class XIcon {
             this.createIconElementData(uri, host);
         }
 
-        this.observeAttributes(host, (attr, val) => {
-            console.info(`Attribut ${attr} changed to: ${val}`);
-            // wenn sich z.B. name, size oder color ändert -> neu rendern
+        this.observeAttributes(host, (attr, _val) => {
             if (attr === "name" && host.hasAttribute('name')) {
                 const newUri = this.fetchIcon(host);
                 this.createIconElementData(newUri, host);

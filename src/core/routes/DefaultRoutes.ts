@@ -2,8 +2,6 @@ import type { PineconeRouter } from "pinecone-router";
 
 function setupDefaultRoutes() {
 
-    console.info("Setting up Pinecone Router...");
-
     const app: PineconeRouter = globalThis.app;
     
     app.settings({

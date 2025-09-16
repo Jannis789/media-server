@@ -3,6 +3,7 @@ import registerFormStyle from './register.xcss';
 import registerFormTemplate from './register.tmpl';
 import { UserResponsePaths, type CreateUserResponse } from "../../../core/shared/user.responses";
 import type { Failure, Success } from "src/core/shared/basic.response.types";
+import { log } from "#utils/logger";
 
 enum RegistrationFields {
     USERNAME = "username",
@@ -63,7 +64,7 @@ export class XRegisterForm {
     }
 
     handleResponse(response: Success<CreateUserResponse>) {
-        console.info("Registration successful");
+        log.component("Registration successful");
         const { session, expiresAt } = response.data;
         const cookie = CookieManager.cookies['session_key'];
         if (!cookie) {
@@ -76,7 +77,7 @@ export class XRegisterForm {
     }
 
     handleIssue(e: Failure<CreateUserResponse>) {
-        console.error("Registration failed with Error");
+        console.warn("Registration failed with Error");
 
         for (const field of Object.values(RegistrationFields)) {
             const inputEle = this.host.shadowRoot!.querySelector(`input[data-field-name="${field}"]`);
