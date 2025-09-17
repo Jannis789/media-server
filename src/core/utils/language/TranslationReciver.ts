@@ -3,6 +3,7 @@ import type { Failure, Success } from "../../shared/basic.response.types";
 import { TranslationResponsePaths, type GetTranslationsResponse } from "../../shared/translation.responses";
 import Alpine from "alpinejs";
 import { status } from "#utils/setup";
+import { getLocalIsoCode } from "./LanguageUtil";
 
 export class TranslationReceiver {
 
@@ -23,7 +24,7 @@ export class TranslationReceiver {
     }
 
     static updateTranslations() {
-        const language = PresistanceStore.get("language");
+        const language = PresistanceStore.get("language")  || getLocalIsoCode();
 
         api(TranslationResponsePaths.GetTranslations + language, this.translationRequest)
             .then(this.handleResponse.bind(this))
