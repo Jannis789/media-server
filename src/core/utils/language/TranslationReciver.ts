@@ -9,6 +9,7 @@ export class TranslationReceiver {
 
     static attempts = 0;
     static maxAttempts = 3
+    static i18nProxy = {};
 
     static get translationRequest() {
         const updatedAt = PresistanceStore.get("translationsUpdatedAt");
@@ -26,6 +27,8 @@ export class TranslationReceiver {
     static updateTranslations() {
         const language = PresistanceStore.get("language")  || getLocalIsoCode();
 
+        Alpine.magic("i18n", () => this.i18nProxy);
+
         api(TranslationResponsePaths.GetTranslations + language, this.translationRequest)
             .then(this.handleResponse.bind(this))
             .catch(this.handleIssue.bind(this));
@@ -37,7 +40,7 @@ export class TranslationReceiver {
 
         const translations = PresistanceStore.get("translations");
 
-        setupI18nDirective(translations);
+        this.setupI18nDirective(translations);
 
         status.initialized.translations = true;
     }
@@ -52,21 +55,20 @@ export class TranslationReceiver {
         console.error("Critical Error, couldn't recive translation:", error);
     }
 
-
-}
-
-function setupI18nDirective(translations: Record<string, string>) {
-    const proxy = new Proxy(translations, {
-        get(target, prop: string) {
-            if (prop in target) {
-                return target[prop];
+    static setupI18nDirective(translations: Record<string, string>) {
+        this.i18nProxy = new Proxy(translations, {
+            get(target, prop: string) {
+                if (prop in target) {
+                    return target[prop];
+                }
+                console.warn(`Translation for key "${prop}" not found.`);
+                return prop;
             }
-            console.warn(`Translation for key "${prop}" not found.`);
-            return prop;
-        }
-    });
-    
-    Alpine.magic("i18n", () => proxy);
+        });
 
-    status.initialized.i18nDirective = true;
+        status.initialized.i18nDirective = true;
+    }
 }
+
+
+

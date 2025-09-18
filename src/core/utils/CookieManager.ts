@@ -1,4 +1,3 @@
-import { status } from "./setup";
 
 export class CookieManager {
 
@@ -9,7 +8,6 @@ export class CookieManager {
         if (!window.Cookie) {
             window.Cookie = Cookie;
         }
-        status.initialized.cookies = true;
     }
 
     get cookieRaw(): string {

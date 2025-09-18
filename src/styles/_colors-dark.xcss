@@ -1,0 +1,30 @@
+
+@white: red;
+@light-bg: rgba(238,238,255,0.5); // statt fade(@accent-200, 50%)
+
+@accent-100: @white;
+@accent-200: #eef;
+@accent-300: #ddf;
+@accent-400: #89d;
+@accent-500: #67d;
+@accent-600: #56c;
+@accent-700: #45b;
+@accent-800: #34a;
+
+@dark-100: #9ab;
+@dark-200: #89a;
+@dark-300: #789;
+@dark-400: #678;
+@dark-500: #567;
+@dark-600: #456;
+@dark-700: #345;
+@dark-800: #235;
+@dark-900: #123;
+
+@text-500: #125;
+@text-400: #236;
+@text-300: #347;
+@text-200: #458;
+@text-100: #569;
+
+@error-default: #f44 !important;

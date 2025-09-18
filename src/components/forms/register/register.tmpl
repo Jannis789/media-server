@@ -2,7 +2,7 @@
 
 <div class="register-form-container">
     <form class="register-form" @submit.prevent="register()">
-        <h1>Registration</h1>
+        <h1 x-text="$i18n.signup"></h1>
         <hr>
 
         <div class="input-box">
@@ -14,7 +14,7 @@
             <input type="text"
                 data-field-name="username"
                 x-model="username"
-                placeholder="Username"
+                :placeholder="$i18n.username"
                 required />
         </div>
 
@@ -27,7 +27,7 @@
             <input type="text"
                 data-field-name="email"
                 x-model="email"
-                placeholder="Email"
+                :placeholder="$i18n.email"
                 required />
         </div>
 
@@ -40,7 +40,7 @@
             <input :type="revealPassword ? 'text' : 'password'"
                 data-field-name="password"
                 x-model="password"
-                placeholder="Password"
+                :placeholder="$i18n.password"
                 required />
 
             <template x-if="!revealPassword">
@@ -67,7 +67,7 @@
             <input :type="revealConfirmPassword ? 'text' : 'password'"
                 data-field-name="password-confirmation"
                 x-model="passwordConfirmation"
-                placeholder="Password"
+                :placeholder="$i18n.password"
                 required />
 
             <template x-if="!revealConfirmPassword">
@@ -86,14 +86,17 @@
         </div>
 
         <div class="remember">
-            <label><input type="checkbox" x-model="remember" />Remember me</label>
-            <a href="#">Forgot Password?</a>
+            <label>
+                <input type="checkbox" x-model="remember">
+                <span x-text="$i18n.rememberMe"></span>
+            </label>
+            <a href="#" x-text="$i18n.forgotPassword"></a>
         </div>
 
-        <button type="submit" class="btnn">Register</button>
+        <button type="submit" class="btnn" x-text="$i18n.signup"></button>
 
         <p>
-            Allready have an Account?&ensp;<a href="/login">LogIn</a>
+            <span x-text="$i18n.hasAccount"></span>&ensp;<a href="/login" x-text="$i18n.login"></a>
         </p>
     </form>
 </div>

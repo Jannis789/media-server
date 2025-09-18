@@ -44,7 +44,7 @@ export function setupApiCommunicator() {
         return new Promise(async (resolve, reject) => {
             let res: Response;
 
-            const cookie = CookieManager?.cookies?.['session_key'];
+            const cookie = CookieManager?.cookies?.['x-Session-UUID'];
             const reqInit = communicatorAppendHead(
                 {
                     ...(cookie && { "x-Session-UUID": cookie.value }),
@@ -88,5 +88,4 @@ export function setupApiCommunicator() {
             resolve(data as Success<TResponse>);
         });
     };
-    status.initialized.apiCommunicator = true;
 }

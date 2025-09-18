@@ -66,9 +66,9 @@ export class XRegisterForm {
     handleResponse(response: Success<CreateUserResponse>) {
         log.component("Registration successful");
         const { session, expiresAt } = response.data;
-        const cookie = CookieManager.cookies['session_key'];
+        const cookie = CookieManager.cookies['x-Session-UUID'];
         if (!cookie) {
-            new Cookie("session_key", session, expiresAt);
+            new Cookie("x-Session-UUID", session, expiresAt);
             return;
         }
 
