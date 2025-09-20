@@ -26,7 +26,7 @@
 @icon-xxxxl: 80px;
 
 // SHADOWS
-@strong-shadow: 0 0 6px fade(@dark-400, 40%);
+@strong-shadow: 0 0 6px color-mix(in srgb, @text-200 40%, transparent);
 
 // FONTS
 @font-face {
@@ -57,6 +57,7 @@ a {
 * {
     font-family: 'primary', sans-serif;
     box-sizing: border-box;
+    color: var(--text-500);
 }
 
 @body-padding: 10px max(4px, min(480px, calc(0.2 * 100vw - 115px)));
@@ -74,7 +75,7 @@ x-body {
 }
 
 hr {
-    border: 1px solid fade(@dark-400, 20%);
+    border: 1px solid @dark-100;
     width: 100%;
 }
 
@@ -83,10 +84,11 @@ hr {
     min-width: 120px;
     max-width: 100%;
     border-radius: @space-xs;
-    border: 1px solid fade(@dark-400, 30%);
+    border: 1px solid @dark-100;
     padding-left: @space-xs;
     box-sizing: border-box;
     min-width: 80px;
+    background-color: @white;
 }
 
 .default-icon {

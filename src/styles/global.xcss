@@ -1,2 +1,32 @@
 @import './_colors.xcss';
+@import './_colors-dark.xcss';
 @import './_typography.xcss';
+
+@white: var(--white);
+@accent-100: var(--accent-100);
+@accent-200: var(--accent-200);
+@accent-300: var(--accent-300);
+@accent-400: var(--accent-400);
+@accent-500: var(--accent-500);
+@accent-600: var(--accent-600);
+@accent-700: var(--accent-700);
+@accent-800: var(--accent-800);
+
+@dark-100: var(--dark-100);
+@dark-200: var(--dark-200);
+@dark-300: var(--dark-300);
+@dark-400: var(--dark-400);
+@dark-500: var(--dark-500);
+@dark-600: var(--dark-600);
+@dark-700: var(--dark-700);
+@dark-800: var(--dark-800);
+@dark-900: var(--dark-900);
+
+@text-500: var(--text-500);
+@text-400: var(--text-400);
+@text-300: var(--text-300);
+@text-200: var(--text-200);
+@text-100: var(--text-100);
+
+@error-default: var(--error-default);
+@light-bg: var(--light-bg);

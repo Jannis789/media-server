@@ -1,30 +1,32 @@
 
-@white: red;
-@light-bg: rgba(238,238,255,0.5); // statt fade(@accent-200, 50%)
+:root.dark {
 
-@accent-100: @white;
-@accent-200: #eef;
-@accent-300: #ddf;
-@accent-400: #89d;
-@accent-500: #67d;
-@accent-600: #56c;
-@accent-700: #45b;
-@accent-800: #34a;
+--white: #151623;
+--accent-100: @white;
+--accent-200: #181c2c;
+--accent-300: #1c2233;
+--accent-400: #232c43;
+--accent-500: #263047;
+--accent-600: #29344c;
+--accent-700: #2c3b5b;
+--accent-800: #303c56;
 
-@dark-100: #9ab;
-@dark-200: #89a;
-@dark-300: #789;
-@dark-400: #678;
-@dark-500: #567;
-@dark-600: #456;
-@dark-700: #345;
-@dark-800: #235;
-@dark-900: #123;
+--dark-100: #23243a;
+--dark-200: #1c1d2e;
+--dark-300: #161822;
+--dark-400: #11131a;
+--dark-500: #0b0c11;
+--dark-600: #090a0e;
+--dark-700: #07080b;
+--dark-800: #050608;
+--dark-900: #030304;
 
-@text-500: #125;
-@text-400: #236;
-@text-300: #347;
-@text-200: #458;
-@text-100: #569;
+--text-500: #c8cbe0;
+--text-400: #888ba0;
+--text-300: #55576a;
+--text-200: #333344;
+--text-100: #1a1a22;
 
-@error-default: #f44 !important;
+--error-default: #c13 !important;
+--light-bg: color-mix(in srgb, var(--accent-200) 50%, transparent);
+}

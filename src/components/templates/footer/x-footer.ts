@@ -1,6 +1,6 @@
 import { Component } from "#decorators/Component";
-import footerStyles from './footer.xcss';
-import footerTemplate from './footer.tmpl';
+import footerStyles from './x-footer.xcss';
+import footerTemplate from './x-footer.tmpl';
 
 @Component('x-footer')
 class XFooter {

@@ -33,15 +33,16 @@ export class TranslationReceiver {
             .then(this.handleResponse.bind(this))
             .catch(this.handleIssue.bind(this));
     }
-
     static handleResponse(response: Success<GetTranslationsResponse>) {
-        PresistanceStore.set("translations", { ...PresistanceStore.get("translations"), ...response.data });
+        const existing = PresistanceStore.get("translations") || {};
+        const { refreshAll, translations } = response.data;
+        const merged = refreshAll ? translations : { ...existing, ...translations };
+        const cleaned = Object.fromEntries(
+            Object.entries(merged).filter(([, v]) => v != null)
+        );
+        PresistanceStore.set("translations", cleaned);
         PresistanceStore.set("translationsUpdatedAt", new Date());
-
-        const translations = PresistanceStore.get("translations");
-
-        this.setupI18nDirective(translations);
-
+        this.setupI18nDirective(cleaned as Record<string, string>);
         status.initialized.translations = true;
     }
 

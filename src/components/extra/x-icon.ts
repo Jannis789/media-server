@@ -1,9 +1,10 @@
 import { Component } from "#decorators/Component";
-import iconStyle from "./icon.xcss";
+
+const modules = import.meta.glob('#public/icons/**/*.svg');
 
 @Component('x-icon')
 export class XIcon {
-    static styles = [iconStyle];
+    static styles = [];
 
     setup(host: HTMLElement) {
         if (host.hasAttribute('name') && host.getAttribute('name')) {
@@ -24,7 +25,6 @@ export class XIcon {
 
     fetchIcon(host: HTMLElement): string {
         const iconName = host.getAttribute('name');
-        const modules = import.meta.glob('#public/icons/**/*.svg');
 
         for (const path in modules) {
             const fileName = path.split('/').pop()?.replace('.svg', '');

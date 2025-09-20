@@ -10,7 +10,7 @@
     flex-direction: column;
     gap: 16px;
     border-radius: @space-md;
-    background-color: @accent-400;
+    background-color: @accent-500;
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.06);

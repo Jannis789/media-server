@@ -1,6 +1,6 @@
 import { Component } from "#decorators/Component";
-import headerStyles from './header.xcss';
-import headerTemplate from './header.tmpl';
+import headerStyles from './x-header.xcss';
+import headerTemplate from './x-header.tmpl';
 
 @Component('x-header')
 class XHeader {

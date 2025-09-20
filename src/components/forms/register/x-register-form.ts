@@ -1,45 +1,55 @@
 import { Component } from "#decorators/Component";
-import LoginFromStyle from './login.xcss';
-import LoginFormTemplate from './login.tmpl';
-import { UserResponsePaths, type LoginUserResponse } from "../../../core/shared/user.responses";
+import registerFormStyle from './x-register-form.xcss';
+import registerFormTemplate from './x-register-form.tmpl';
+import { UserResponsePaths, type CreateUserResponse } from "../../../core/shared/user.responses";
 import type { Failure, Success } from "src/core/shared/basic.response.types";
 import { log } from "#utils/logger";
 
-enum LoginFields {
+enum RegistrationFields {
+    USERNAME = "username",
     EMAIL = "email",
     PASSWORD = "password",
+    PASSWORD_CONFIRMATION = "password-confirmation"
 }
 
-@Component('x-login-form')
-export class XLoginForm {
-    static styles = [LoginFromStyle];
+@Component('x-register-form')
+export class XRegisterForm {
 
-    static template = LoginFormTemplate;
+    static styles = [registerFormStyle];
 
-    host!: HTMLElement;
+    static template = registerFormTemplate;
+    
+    revealPassword = false;
+
+    revealConfirmPassword = false;
+
+    username: string = '';
 
     email: string = '';
 
     password: string = '';
 
+    passwordConfirmation: string = '';
+
     remember: boolean = false;
 
-    revealPassword: boolean = false;
-
-    loading: boolean = false;
+    host!: HTMLElement;
 
     errors: Record<string, string[]> = {
-        [LoginFields.EMAIL]: [],
-        [LoginFields.PASSWORD]: []
+        [RegistrationFields.USERNAME]: [],
+        [RegistrationFields.EMAIL]: [],
+        [RegistrationFields.PASSWORD]: [],
+        [RegistrationFields.PASSWORD_CONFIRMATION]: []
     };
 
-    get loginRequest() {
+    private get registerRequest() {
         return {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                username: this.username,
                 email: this.email,
                 password: this.password,
                 remember: this.remember,
@@ -47,18 +57,15 @@ export class XLoginForm {
         };
     }
 
-    login() {
-        this.loading = true;
-        this.errors = {};
-        api(UserResponsePaths.LoginUser, this.loginRequest)
-            .then(this.handleResponse.bind(this))
-            .catch(this.handleIssue.bind(this))
-            .finally(() => this.loading = false );
+    register() {
+        api(UserResponsePaths.CreateUser, this.registerRequest)
+            .then(this.handleResponse)
+            .catch(this.handleIssue.bind(this));
     }
 
-    handleResponse(response: Success<LoginUserResponse>) {
+    handleResponse(response: Success<CreateUserResponse>) {
+        log.component("Registration successful");
         const { session, expiresAt } = response.data;
-
         const cookie = CookieManager.cookies['x-Session-UUID'];
         if (!cookie) {
             new Cookie("x-Session-UUID", session, expiresAt);
@@ -67,15 +74,18 @@ export class XLoginForm {
 
         cookie.value = session;
         cookie.expires = expiresAt;
-        log.component(`Login successful. Session cookie "${cookie.name}" updated with new session key: ${session}`);
     }
 
-    handleIssue(e: Failure<LoginUserResponse>) {
-        console.error("Login failed with Error");
+    handleIssue(e: Failure<CreateUserResponse>) {
+        console.warn("Registration failed with Error");
 
-        for (const field of Object.values(LoginFields)) {
+        for (const field of Object.values(RegistrationFields)) {
             const inputEle = this.host.shadowRoot!.querySelector(`input[data-field-name="${field}"]`);
             inputEle?.addEventListener('input', () => this.errors[field] = [], { once: true });
+        }
+
+        if (this.password !== this.passwordConfirmation) {
+            this.errors['password-confirmation'] = ["Passwords do not match."];
         }
 
         e.error.fields.forEach(fieldError => {

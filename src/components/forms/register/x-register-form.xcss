@@ -1,14 +1,13 @@
 @import '../../../styles/global.xcss';
 
-
-.login-form-container {
+.register-form-container {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: @space-lg;
     min-height: 90vh;
 
-    .login-form {
+    .register-form {
         padding: @space-xl;
         border-radius: @space-sm;
         box-shadow: @strong-shadow;
@@ -21,11 +20,8 @@
         background-color: @light-bg;
         border: 3px solid @white;
 
-
-        .icon {
-            width: @icon-xxxl;
-            height: @icon-xxxl;
-            background: black;
+        hr {
+            margin: 0;
         }
 
         .input-box {
@@ -34,7 +30,7 @@
             gap: @space-xs;
             background: @accent-200;
             border-radius: @space-xs;
-            border: 1px solid fade(@dark-400, 30%);
+            border: 1px solid @dark-100;
             padding: @space-xxs;
 
             x-icon {
@@ -48,7 +44,7 @@
             x-icon.right-symbolic {
                 margin: @space-xs @space-xs @space-xs 0;
                 cursor: pointer;
-
+                
                 &:hover {
                     background: @dark-500;
                 }
@@ -64,44 +60,43 @@
                 flex: 1;
                 .default-input();
             }
-        }
 
+        }
         .remember {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: @space-md;
-            flex-wrap: wrap;
-
-            label {
+                width: 100%;
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
-                gap: @space-xs;
+                margin-bottom: @space-md;
+                flex-wrap: wrap;
 
-                input[type="checkbox"] {
-                    width: @space-md;
-                    height: @space-md;
+                label {
+                    display: flex;
+                    align-items: center;
+                    gap: @space-xs;
+                
+                    input[type="checkbox"] {
+                        width: @space-md;
+                        height: @space-md;
+                    }
+                }
+            
+                a {
+                    color: @accent-600;
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
             }
 
-            a {
-                color: @accent-600;
-                text-decoration: none;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-
-        button[type="submit"]  {
+        button[type="submit"] {
             width: 100%;
             .default-submit-button();
         }
 
         p, a {
             font-size: 0.9rem;
-            color: @text-400;
 
             a {
                 .hyperlink();

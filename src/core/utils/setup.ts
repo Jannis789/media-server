@@ -19,8 +19,8 @@ const SetupStatus = {
     lightDomStyles: false,
     PresistanceStore: false,
     translations: false,
-    components: false,
     i18nDirective: false,
+    components: false,
 };
 
 const setupStatusObject = new ObservableState(SetupStatus);
@@ -31,10 +31,13 @@ export const status = {
     initialized: setupStatusObject.proxy,
 };
 
+const modules = import.meta.glob("#components/**/*.ts");
+
+const loadedTags = new Set<string>();
+
 export function setup() {
     const steps: Record<string, () => void> = {
         alpine: () => { // syncronous, deps = None
-            document.documentElement.classList.add("dark")
             Alpine.plugin(PineconeRouterPlugin);
             Alpine.plugin(presist);
             status.initialized.alpine = true;
@@ -71,15 +74,18 @@ export function setup() {
             status.initialized.i18nDirective = true;
             log.setup("Initialized: Translations can be used now");
         },
-        components: () => { // syncronous, deps = dependencies are component dependent
+        i18nDirective: () => { // assyncronous, deps = translations
             Alpine.start();
-            import.meta.glob("#components/**/*.ts", { eager: true });
+            log.setup("initialized i18nDirective can be done here");
+        },
+        components: () => { // syncronous, deps = dependencies are component dependent
+            document.addEventListener("pinecone:end", () => {
+                lazyLoadComponents(document.body);
+            });
             setupStatusObject.proxy.components = true;
             log.setup("Initialized: Components can be used now");
         },
-        i18nDirective: () => { // assyncronous, deps = translations
-            log.setup("initialized i18nDirective can be done here");
-        },
+
     };
 
     keys.forEach((key, idx) => {
@@ -92,4 +98,18 @@ export function setup() {
     });
 
     steps[keys[0]]?.();
+}
+
+export function lazyLoadComponents(source: Element) {
+    const elements = source.querySelectorAll(":not(:defined)");
+    for (const el of elements) {
+        const tag = el.tagName.toLowerCase();
+        if (loadedTags.has(tag)) continue;
+        const path = Object.keys(modules).find(p => p.endsWith(`/${tag}.ts`));
+        if (path) {
+            log.component(`Found component "${tag}", importing from ${path}`);
+            modules[path]();
+            loadedTags.add(tag);
+        }
+    }
 }

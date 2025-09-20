@@ -1,3 +1,4 @@
+import { lazyLoadComponents } from '#utils/setup';
 import Alpine from 'alpinejs';
 
 // Instanz-Map außerhalb der Component-Funktion
@@ -27,6 +28,7 @@ export function Component(tagName: string) {
 
           const template = NativeComponent.template;
           if (template) {
+            lazyLoadComponents(template);
             container.append(template.cloneNode(true));
           }
           this.shadow.append(container);
