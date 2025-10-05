@@ -17,6 +17,5 @@
 
         background: @bg-gradient;
         height: auto;
-        max-height: max(624px, calc(100vh - 108px));
     }
 }
